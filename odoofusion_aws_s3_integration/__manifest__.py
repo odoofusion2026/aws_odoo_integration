@@ -39,5 +39,8 @@ Key Features:
     'price': 39.00,
     'currency': 'USD',
     'license': 'OPL-1',
+    'images': [
+        'static/description/banner.png'
+    ],
 }
 
