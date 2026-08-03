@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_aws_s3_bucket_tree" model="ir.ui.view">
+        <field name="name">aws.s3.bucket.list</field>
+        <field name="model">aws.s3.bucket</field>
+        <field name="arch" type="xml">
+            <list string="AWS S3 Buckets">
+                <field name="name"/>
+                <field name="region_name"/>
+                <field name="state" widget="badge" 
+                       decoration-success="state == 'connected'" 
+                       decoration-danger="state == 'failed'" 
+                       decoration-info="state == 'draft'"/>
+                <field name="is_active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_aws_s3_bucket_form" model="ir.ui.view">
+        <field name="name">aws.s3.bucket.form</field>
+        <field name="model">aws.s3.bucket</field>
+        <field name="arch" type="xml">
+            <form string="AWS S3 Bucket Configuration">
+                <header>
+                    <button name="action_test_connection" string="Test Connection" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,connected,failed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="e.g. odoo-company-files"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="AWS Connection details">
+                            <field name="region_name" placeholder="e.g. ap-southeast-1"/>
+                            <field name="aws_access_key_id" placeholder="e.g. AKIAIOSFODNN7EXAMPLE"/>
+                            <field name="aws_secret_access_key" password="True" placeholder="AWS Secret Key"/>
+                        </group>
+                        <group string="Configuration Status">
+                            <field name="is_active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_aws_s3_bucket" model="ir.actions.act_window">
+        <field name="name">AWS S3 Buckets</field>
+        <field name="res_model">aws.s3.bucket</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure your AWS S3 bucket connection.
+            </p>
+            <p>
+                Ensure that your AWS IAM credentials have sufficient permissions to read/write/delete objects in the S3 bucket.
+            </p>
+        </field>
+    </record>
+</odoo>

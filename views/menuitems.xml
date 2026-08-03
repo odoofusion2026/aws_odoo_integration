@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top-level Menu -->
+    <menuitem id="menu_aws_s3_root" name="AWS S3" sequence="100"/>
+
+    <!-- Dashboard Menu -->
+    <menuitem id="menu_aws_s3_dashboard" name="Dashboard" parent="menu_aws_s3_root" action="action_aws_s3_dashboard_server" sequence="10"/>
+
+    <!-- File Explorer Menu -->
+    <menuitem id="menu_aws_s3_explorer" name="File Explorer" parent="menu_aws_s3_root" action="action_aws_s3_file_explorer_server" sequence="20"/>
+
+    <!-- Configuration Sub-menu -->
+    <menuitem id="menu_aws_s3_config" name="Configuration" parent="menu_aws_s3_root" sequence="30"/>
+
+    <!-- Buckets Menu -->
+    <menuitem id="menu_aws_s3_buckets" name="Buckets Setup" parent="menu_aws_s3_config" action="action_aws_s3_bucket" sequence="10"/>
+
+    <!-- Rules Menu -->
+    <menuitem id="menu_aws_s3_rules" name="Sync Rules" parent="menu_aws_s3_config" action="action_aws_s3_attachment_rule" sequence="20"/>
+
+    <!-- Logs Menu -->
+    <menuitem id="menu_aws_s3_logs" name="Activity Logs Terminal" parent="menu_aws_s3_root" action="action_aws_s3_log" sequence="40"/>
+</odoo>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_aws_s3_file_explorer_form" model="ir.ui.view">
+        <field name="name">aws.s3.file.explorer.form</field>
+        <field name="model">aws.s3.file.explorer</field>
+        <field name="arch" type="xml">
+            <form string="AWS S3 File Explorer">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="bucket_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="folder_path" readonly="1" class="oe_inline"/>
+                            <button name="action_refresh" type="object" string="Refresh" icon="fa-refresh" class="btn btn-secondary oe_inline" style="margin-left: 10px;"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Contents" name="contents">
+                            <field name="item_ids" readonly="1" nolabel="1">
+                                <list create="false" edit="false" delete="false">
+                                    <field name="name" string="Name"/>
+                                    <field name="type" string="Type"/>
+                                    <field name="size" string="Size"/>
+                                    <field name="last_modified" string="Last Modified"/>
+                                    <button name="action_open_folder" string="Open" type="object" icon="fa-folder-open-o" 
+                                            invisible="type != 'folder'"/>
+                                    <button name="action_download_file" string="Download" type="object" icon="fa-download" 
+                                            invisible="type != 'file'"/>
+                                    <button name="action_delete_file" string="Delete" type="object" icon="fa-trash" 
+                                            invisible="type != 'file'" 
+                                            confirm="Are you sure you want to permanently delete this object from AWS S3?"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_aws_s3_file_explorer_server" model="ir.actions.server">
+        <field name="name">AWS S3 File Explorer</field>
+        <field name="model_id" ref="model_aws_s3_file_explorer"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_open_explorer()
+        </field>
+    </record>
+
+    <record id="action_aws_s3_file_explorer" model="ir.actions.act_window">
+        <field name="name">AWS S3 File Explorer</field>
+        <field name="res_model">aws.s3.file.explorer</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                AWS S3 File Explorer.
+            </p>
+            <p>
+                Browse directories, open subfolders, download documents, or remove objects on your AWS S3 buckets in real-time.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_aws_s3_attachment_rule_tree" model="ir.ui.view">
+        <field name="name">aws.s3.attachment.rule.list</field>
+        <field name="model">aws.s3.attachment.rule</field>
+        <field name="arch" type="xml">
+            <list string="AWS S3 Attachment Rules">
+                <field name="model_id"/>
+                <field name="storage_mode"/>
+                <field name="root_folder"/>
+                <field name="bucket_id"/>
+                <field name="is_active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_aws_s3_attachment_rule_form" model="ir.ui.view">
+        <field name="name">aws.s3.attachment.rule.form</field>
+        <field name="model">aws.s3.attachment.rule</field>
+        <field name="arch" type="xml">
+            <form string="AWS S3 Attachment Sync Rule">
+                <header>
+                    <button name="action_migrate_to_s3" string="Bulk Migrate Attachments to S3" type="object" class="oe_highlight" confirm="This will upload all existing attachments of this model to AWS S3 and clean up local Odoo files if using S3 Only mode. Are you sure you want to proceed?"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Model Storage Settings">
+                            <field name="model_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="storage_mode"/>
+                        </group>
+                        <group string="S3 Folder Routing &amp; Bucket">
+                            <field name="root_folder" placeholder="e.g. Sales/"/>
+                            <field name="bucket_id" options="{'no_create': True}"/>
+                            <field name="is_active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_aws_s3_attachment_rule" model="ir.actions.act_window">
+        <field name="name">Sync Rules Configuration</field>
+        <field name="res_model">aws.s3.attachment.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a model sync rule.
+            </p>
+            <p>
+                Configure which Odoo models should synchronize their attachments to S3 and define the storage mode (S3 Only or Dual Storage).
+            </p>
+        </field>
+    </record>
+</odoo>
