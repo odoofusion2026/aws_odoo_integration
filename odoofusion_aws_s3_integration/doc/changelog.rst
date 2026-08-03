@@ -3,11 +3,11 @@ Changelog
 
 Date: 2026-06-25 (Thursday) at 12:15 AM
 Changes:
-- Created Odoo 18 AWS S3 Integration module with full manifest settings (aws_odoo_integration_cloudaddons/__manifest__.py)
-- Implemented models for S3 bucket connection, configuration rules, activity log terminal, visual dashboard, and S3 file explorer (aws_odoo_integration_cloudaddons/models/)
-- Overrode ir.attachment model to handle auto attachment sync and storage logic (aws_odoo_integration_cloudaddons/models/ir_attachment.py)
-- Configured security access settings (aws_odoo_integration_cloudaddons/security/ir.model.access.csv)
-- Created views for dashboard, file explorer, configurations, and logs (aws_odoo_integration_cloudaddons/views/)
+- Created Odoo 18 AWS S3 Integration module with full manifest settings (odoofusion_aws_s3_integration/__manifest__.py)
+- Implemented models for S3 bucket connection, configuration rules, activity log terminal, visual dashboard, and S3 file explorer (odoofusion_aws_s3_integration/models/)
+- Overrode ir.attachment model to handle auto attachment sync and storage logic (odoofusion_aws_s3_integration/models/ir_attachment.py)
+- Configured security access settings (odoofusion_aws_s3_integration/security/ir.model.access.csv)
+- Created views for dashboard, file explorer, configurations, and logs (odoofusion_aws_s3_integration/views/)
 
 Date: 2026-06-25 (Thursday) at 11:54 AM
 Changes:

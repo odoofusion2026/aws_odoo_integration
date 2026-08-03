@@ -120,10 +120,10 @@ class AwsS3Dashboard(models.TransientModel):
                 <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom flex-wrap gap-3">
                     <h4 class="mb-0 fw-bold" style="color: #2c3e50;"><i class="fa fa-cloud text-primary me-2"></i>AWS S3 Sync Monitor</h4>
                     <div class="d-flex gap-2 flex-wrap">
-                        <a href="/web#action=aws_odoo_integration_cloudaddons.action_aws_s3_file_explorer_server" class="btn btn-sm fw-bold shadow-sm" style="background-color: #4f46e5; color: #ffffff; border: 1px solid #4f46e5; padding: 6px 12px; border-radius: 6px;"><i class="fa fa-folder-open me-1"></i> S3 File Explorer</a>
-                        <a href="/web#action=aws_odoo_integration_cloudaddons.action_aws_s3_bucket" class="btn btn-sm fw-bold shadow-sm" style="background-color: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px;"><i class="fa fa-database me-1"></i> Setup Buckets</a>
-                        <a href="/web#action=aws_odoo_integration_cloudaddons.action_aws_s3_attachment_rule" class="btn btn-sm fw-bold shadow-sm" style="background-color: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px;"><i class="fa fa-cogs me-1"></i> Sync Rules</a>
-                        <a href="/web#action=aws_odoo_integration_cloudaddons.action_aws_s3_log" class="btn btn-sm fw-bold shadow-sm" style="background-color: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px;"><i class="fa fa-file-text-o me-1"></i> Audit Logs</a>
+                        <a href="/web#action=odoofusion_aws_s3_integration.action_aws_s3_file_explorer_server" class="btn btn-sm fw-bold shadow-sm" style="background-color: #4f46e5; color: #ffffff; border: 1px solid #4f46e5; padding: 6px 12px; border-radius: 6px;"><i class="fa fa-folder-open me-1"></i> S3 File Explorer</a>
+                        <a href="/web#action=odoofusion_aws_s3_integration.action_aws_s3_bucket" class="btn btn-sm fw-bold shadow-sm" style="background-color: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px;"><i class="fa fa-database me-1"></i> Setup Buckets</a>
+                        <a href="/web#action=odoofusion_aws_s3_integration.action_aws_s3_attachment_rule" class="btn btn-sm fw-bold shadow-sm" style="background-color: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px;"><i class="fa fa-cogs me-1"></i> Sync Rules</a>
+                        <a href="/web#action=odoofusion_aws_s3_integration.action_aws_s3_log" class="btn btn-sm fw-bold shadow-sm" style="background-color: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px;"><i class="fa fa-file-text-o me-1"></i> Audit Logs</a>
                     </div>
                 </div>
 
@@ -142,7 +142,7 @@ class AwsS3Dashboard(models.TransientModel):
                                     <small style="font-size: 11px; color: #7c3aed;">Active AWS Buckets</small>
                                 </div>
                             </div>
-                            <a href="/web#action=aws_odoo_integration_cloudaddons.action_aws_s3_bucket" class="stretched-link"></a>
+                            <a href="/web#action=odoofusion_aws_s3_integration.action_aws_s3_bucket" class="stretched-link"></a>
                         </div>
                     </div>
 
@@ -159,7 +159,7 @@ class AwsS3Dashboard(models.TransientModel):
                                     <small style="font-size: 11px; color: #0e7490;">Sync configurations</small>
                                 </div>
                             </div>
-                            <a href="/web#action=aws_odoo_integration_cloudaddons.action_aws_s3_attachment_rule" class="stretched-link"></a>
+                            <a href="/web#action=odoofusion_aws_s3_integration.action_aws_s3_attachment_rule" class="stretched-link"></a>
                         </div>
                     </div>
 
@@ -176,7 +176,7 @@ class AwsS3Dashboard(models.TransientModel):
                                     <small style="font-size: 11px; color: #15803d;">Successful uploads</small>
                                 </div>
                             </div>
-                            <a href="/web#action=aws_odoo_integration_cloudaddons.action_aws_s3_log" class="stretched-link"></a>
+                            <a href="/web#action=odoofusion_aws_s3_integration.action_aws_s3_log" class="stretched-link"></a>
                         </div>
                     </div>
 
@@ -193,7 +193,7 @@ class AwsS3Dashboard(models.TransientModel):
                                     <small style="font-size: 11px; color: #b91c1c;">Sync issues</small>
                                 </div>
                             </div>
-                            <a href="/web#action=aws_odoo_integration_cloudaddons.action_aws_s3_log" class="stretched-link"></a>
+                            <a href="/web#action=odoofusion_aws_s3_integration.action_aws_s3_log" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
@@ -205,7 +205,7 @@ class AwsS3Dashboard(models.TransientModel):
                         <div class="card border shadow-sm h-100" style="border-radius: 12px; border-color: #e2e8f0 !important;">
                             <div class="card-header bg-white border-bottom-0 pt-3 px-3 pb-0 d-flex justify-content-between align-items-center">
                                 <h5 class="card-title mb-0 fw-bold" style="font-size: 15px; color: #2c3e50;"><i class="fa fa-history text-info me-2"></i>Recent Sync Logs</h5>
-                                <a href="/web#action=aws_odoo_integration_cloudaddons.action_aws_s3_log" class="btn btn-link btn-sm text-decoration-none p-0 fw-bold text-primary">View All &rarr;</a>
+                                <a href="/web#action=odoofusion_aws_s3_integration.action_aws_s3_log" class="btn btn-link btn-sm text-decoration-none p-0 fw-bold text-primary">View All &rarr;</a>
                             </div>
                             <div class="card-body p-3">
                                 <div class="table-responsive">
@@ -250,7 +250,7 @@ class AwsS3Dashboard(models.TransientModel):
                             <div class="card border shadow-sm" style="border-radius: 12px; background-color: #fff; border-color: #e2e8f0 !important;">
                                 <div class="card-header bg-white border-bottom-0 pt-3 px-3 pb-0 d-flex justify-content-between align-items-center">
                                     <h6 class="card-title mb-0 fw-bold" style="font-size: 14px; color: #2c3e50;"><i class="fa fa-hdd-o text-primary me-2"></i>Active Buckets</h6>
-                                    <a href="/web#action=aws_odoo_integration_cloudaddons.action_aws_s3_bucket" class="btn btn-link btn-sm text-decoration-none p-0 fw-bold text-primary">Manage &rarr;</a>
+                                    <a href="/web#action=odoofusion_aws_s3_integration.action_aws_s3_bucket" class="btn btn-link btn-sm text-decoration-none p-0 fw-bold text-primary">Manage &rarr;</a>
                                 </div>
                                 <div class="card-body p-3">
                                     {buckets_html}
