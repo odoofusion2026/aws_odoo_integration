@@ -21,6 +21,10 @@ class AwsS3DeleteQueue(models.Model):
         index=True,
         help='The S3 object key (without s3:// prefix) queued for deletion.',
     )
+    bucket_name = fields.Char(
+        string='S3 Bucket Name',
+        help='The S3 bucket name from which this object should be deleted.',
+    )
     state = fields.Selection(
         selection=[
             ('pending', 'Pending'),
@@ -50,68 +54,82 @@ class AwsS3DeleteQueue(models.Model):
             return
 
         _logger.info('S3 delete queue: processing %d pending deletions.', len(pending))
-        objects_to_delete = [{'Key': rec.s3_key} for rec in pending]
 
-        try:
-            response = client.delete_objects(
-                Bucket=config.bucket_name,
-                Delete={
-                    'Objects': objects_to_delete,
-                    'Quiet': False,
-                },
-            )
+        from collections import defaultdict
+        bucket_groups = defaultdict(list)
+        for rec in pending:
+            bname = rec.bucket_name or config.bucket_name
+            if bname:
+                bucket_groups[bname].append(rec)
 
-            deleted_keys = {d['Key'] for d in response.get('Deleted', [])}
-            failed_map = {
-                e['Key']: e.get('Message', 'Unknown S3 error')
-                for e in response.get('Errors', [])
-            }
+        for bname, recs in bucket_groups.items():
+            objects_to_delete = [{'Key': r.s3_key} for r in recs]
+            bucket_rec = self.env['aws.s3.bucket'].sudo().search([('name', '=', bname), ('is_active', '=', True)], limit=1)
+            if bucket_rec:
+                b_client = bucket_rec._get_s3_client(bucket_rec)
+            else:
+                b_client = client
 
-            done_ids = []
-            failed_ids = []
-            retry_ids = []
+            try:
+                response = b_client.delete_objects(
+                    Bucket=bname,
+                    Delete={
+                        'Objects': objects_to_delete,
+                        'Quiet': False,
+                    },
+                )
 
-            for rec in pending:
-                if rec.s3_key in deleted_keys:
-                    done_ids.append(rec.id)
-                elif rec.s3_key in failed_map:
-                    if rec.retry_count >= 2:
-                        failed_ids.append((rec.id, failed_map[rec.s3_key]))
-                    else:
-                        retry_ids.append((rec.id, failed_map[rec.s3_key]))
+                deleted_keys = {d['Key'] for d in response.get('Deleted', [])}
+                failed_map = {
+                    e['Key']: e.get('Message', 'Unknown S3 error')
+                    for e in response.get('Errors', [])
+                }
 
-            if done_ids:
-                self.browse(done_ids).write({'state': 'done'})
+                done_ids = []
+                failed_ids = []
+                retry_ids = []
 
-            for rec_id, err_msg in failed_ids:
-                self.browse(rec_id).write({
-                    'state': 'failed',
-                    'retry_count': 3,
-                    'error_msg': err_msg,
-                })
+                for rec in recs:
+                    if rec.s3_key in deleted_keys:
+                        done_ids.append(rec.id)
+                    elif rec.s3_key in failed_map:
+                        if rec.retry_count >= 2:
+                            failed_ids.append((rec.id, failed_map[rec.s3_key]))
+                        else:
+                            retry_ids.append((rec.id, failed_map[rec.s3_key]))
 
-            for rec_id, err_msg in retry_ids:
-                rec = self.browse(rec_id)
-                rec.write({
-                    'retry_count': rec.retry_count + 1,
-                    'error_msg': err_msg,
-                })
+                if done_ids:
+                    self.browse(done_ids).write({'state': 'done'})
 
-            _logger.info(
-                'S3 delete queue: %d deleted, %d failed, %d will retry.',
-                len(done_ids), len(failed_ids), len(retry_ids),
-            )
+                for rec_id, err_msg in failed_ids:
+                    self.browse(rec_id).write({
+                        'state': 'failed',
+                        'retry_count': 3,
+                        'error_msg': err_msg,
+                    })
 
-        except Exception as e:
-            _logger.error('S3 batch delete failed: %s', e)
-            for rec in pending:
-                if rec.retry_count >= 2:
-                    rec.write({'state': 'failed', 'error_msg': str(e)})
-                else:
+                for rec_id, err_msg in retry_ids:
+                    rec = self.browse(rec_id)
                     rec.write({
                         'retry_count': rec.retry_count + 1,
-                        'error_msg': str(e),
+                        'error_msg': err_msg,
                     })
+
+                _logger.info(
+                    'S3 delete queue for bucket %s: %d deleted, %d failed, %d will retry.',
+                    bname, len(done_ids), len(failed_ids), len(retry_ids),
+                )
+
+            except Exception as e:
+                _logger.error('S3 batch delete failed for bucket %s: %s', bname, e)
+                for rec in recs:
+                    if rec.retry_count >= 2:
+                        rec.write({'state': 'failed', 'error_msg': str(e)})
+                    else:
+                        rec.write({
+                            'retry_count': rec.retry_count + 1,
+                            'error_msg': str(e),
+                        })
 
     @api.model
     def action_clean_done(self):

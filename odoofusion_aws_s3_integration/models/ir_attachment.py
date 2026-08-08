@@ -23,6 +23,7 @@ class IrAttachment(models.Model):
 
     is_s3_stored = fields.Boolean(string='Stored on S3', default=False, index=True)
     s3_key = fields.Char(string='S3 Object Key', index=True)
+    s3_bucket_id = fields.Many2one('aws.s3.bucket', string='AWS S3 Bucket', index=True, ondelete='set null')
 
     @api.model
     @tools.ormcache()
@@ -58,46 +59,164 @@ class IrAttachment(models.Model):
         return pool[cache_key], config
 
     @api.model
-    def _file_write(self, bin_value, checksum):
-        client, config = self._get_global_s3_client()
+    def _compute_s3_key_static(self, res_model, res_id, name, rule):
+        """Generate a 3-tier S3 object key path for a given record."""
+        root_folder = (rule.root_folder or '').strip('/')
+        if root_folder:
+            root_folder += '/'
 
-        if not client:
-            return super()._file_write(bin_value, checksum)
+        record = None
+        if res_model and res_id:
+            try:
+                record = self.env[res_model].browse(res_id).exists()
+            except Exception:
+                record = None
+
+        path_parts = []
+        if record:
+            if res_model == 'crm.lead':
+                path_parts = [record.name or '']
+            elif res_model == 'sale.order':
+                path_parts = [getattr(record.partner_id, 'name', 'General') or 'General', record.name or '']
+            elif res_model == 'account.move':
+                path_parts = [getattr(record.partner_id, 'name', 'General') or 'General', record.name or '']
+            elif res_model == 'purchase.order':
+                path_parts = [getattr(record.partner_id, 'name', 'General') or 'General', record.name or '']
+            elif res_model == 'hr.employee':
+                path_parts = [record.name or '']
+            elif res_model == 'project.task':
+                path_parts = [getattr(record.project_id, 'name', 'General') or 'General', record.name or '']
+            elif res_model == 'helpdesk.ticket':
+                path_parts = [record.name or '']
+            elif res_model == 'stock.picking':
+                path_parts = [record.name or '']
+            else:
+                path_parts = [record.display_name or str(record.id)]
+        else:
+            path_parts = ['Unsorted']
+
+        clean_parts = [str(p).replace('/', '_').strip() for p in path_parts if p]
+        sub_path = '/'.join(clean_parts)
+        if sub_path:
+            sub_path += '/'
+
+        filename = (name or 'attachment').replace('/', '_')
+        return f"{root_folder}{sub_path}{filename}"
+
+    def _get_s3_path(self, rule=None):
+        """Return the S3 key path for this attachment."""
+        self.ensure_one()
+        if not rule:
+            rule = self.env['aws.s3.attachment.rule'].sudo().search([
+                ('model_id.model', '=', self.res_model),
+                ('is_active', '=', True),
+            ], limit=1)
+        if not rule:
+            return False
+        return self._compute_s3_key_static(self.res_model, self.res_id, self.name, rule)
+
+    @api.model
+    def _get_active_s3_rule(self, res_model):
+        """Fetch the active S3 attachment rule for a given model."""
+        if not res_model:
+            return False
+        return self.env['aws.s3.attachment.rule'].sudo().search([
+            ('model_id.model', '=', res_model),
+            ('is_active', '=', True),
+            ('storage_mode', '!=', 'odoo_only'),
+        ], limit=1)
+
+    @api.model
+    def _parse_s3_fname(self, fname):
+        """Parse s3://<bucket_id>/<key> or s3://<key> and return (client, bucket_name, key)."""
+        if not (fname and fname.startswith('s3://')):
+            return None, None, None
+
+        s3_key = fname[5:]
+        bucket_id = None
+        parts = s3_key.split('/', 1)
+        if len(parts) == 2 and parts[0].isdigit():
+            try:
+                bucket_id = int(parts[0])
+                s3_key = parts[1]
+            except ValueError:
+                pass
+
+        if bucket_id:
+            bucket = self.env['aws.s3.bucket'].sudo().browse(bucket_id)
+            if bucket and bucket.exists():
+                client = bucket._get_s3_client(bucket)
+                return client, bucket.name, s3_key
+
+        client, config = self._get_global_s3_client()
+        if client and config:
+            return client, config.bucket_name, s3_key
+
+        return None, None, None
+
+    # ----------------------------------------------------------
+    # Core S3 Storage Hook — _get_datas_related_values
+    # ----------------------------------------------------------
+
+    def _get_datas_related_values(self, data, mimetype):
+        config = self._get_active_s3_config()
+        if not config:
+            return super()._get_datas_related_values(data, mimetype)
+
+        s3_storage_mode = self.env.context.get('s3_storage_mode')
+        s3_bucket_id = self.env.context.get('s3_bucket_id')
+        s3_key = self.env.context.get('s3_key')
 
         if config.routing_mode == 'rule_based':
-            res_model = self.env.context.get('s3_log_model', '')
-            rule = self._get_rule_for_model(res_model)
+            if not s3_storage_mode or s3_storage_mode == 'odoo_only' or not s3_key or not s3_bucket_id:
+                return super()._get_datas_related_values(data, mimetype)
+        else:
+            s3_storage_mode = 's3_only'
+            checksum = self._compute_checksum(data)
+            s3_key = f"{checksum[:2]}/{checksum}"
+            s3_bucket_id = None
 
-            if not rule or rule.storage_mode == 'odoo_only':
-                return super()._file_write(bin_value, checksum)
+        if s3_bucket_id:
+            bucket = self.env['aws.s3.bucket'].sudo().browse(s3_bucket_id)
+            if bucket and bucket.exists():
+                client = bucket._get_s3_client(bucket)
+                bucket_name = bucket.name
+            else:
+                client, _ = self._get_global_s3_client()
+                bucket_name = config.bucket_name
+        else:
+            client, _ = self._get_global_s3_client()
+            bucket_name = config.bucket_name
 
-        s3_key = f"{checksum[:2]}/{checksum}"
+        if not client:
+            return super()._get_datas_related_values(data, mimetype)
+
+        checksum = self._compute_checksum(data)
+
+        try:
+            index_content = self._index(data, mimetype, checksum=checksum)
+        except TypeError:
+            index_content = self._index(data, mimetype)
 
         try:
             try:
-                client.head_object(Bucket=config.bucket_name, Key=s3_key)
+                client.head_object(Bucket=bucket_name, Key=s3_key)
                 _logger.debug('S3 dedup hit: %s already exists in S3.', s3_key)
-                return f's3://{s3_key}'
             except client.exceptions.ClientError as head_err:
                 error_code = head_err.response['Error']['Code']
                 if error_code != '404':
                     raise
 
-            from odoo.tools.mimetypes import guess_mimetype
-            mimetype = guess_mimetype(bin_value[:1024], default='application/octet-stream')
-
-            file_size = len(bin_value)
-            if file_size > 100 * 1024 * 1024:
-                self._s3_multipart_upload(client, config, s3_key, bin_value, mimetype)
-            else:
-                client.put_object(
-                    Bucket=config.bucket_name,
-                    Key=s3_key,
-                    Body=bin_value,
-                    ContentType=mimetype,
-                )
-
-            _logger.debug('S3 upload: %s (%d bytes)', s3_key, file_size)
+                file_size = len(data)
+                if file_size > 100 * 1024 * 1024:
+                    self._s3_multipart_upload_custom(client, bucket_name, s3_key, data, mimetype)
+                else:
+                    client.put_object(
+                        Bucket=bucket_name,
+                        Key=s3_key,
+                        Body=data,
+                        ContentType=mimetype or 'application/octet-stream',
+                    )
 
             self.env['aws.s3.log'].sudo().create({
                 'name': 'Upload',
@@ -106,36 +225,58 @@ class IrAttachment(models.Model):
                 'res_id': self.env.context.get('s3_log_res_id', 0),
                 's3_key': s3_key,
                 'status': 'success',
-                'message': f"Uploaded {file_size} bytes to s3://{config.bucket_name}/{s3_key}",
+                'message': f"Uploaded file to S3 bucket '{bucket_name}' key '{s3_key}'",
             })
-
-            return f's3://{s3_key}'
 
         except Exception as e:
-            _logger.error('S3 _file_write failed for key %s: %s — falling back to local filestore.', s3_key, e)
+            _logger.error("AWS S3 Upload Failed for key %s: %s", s3_key, e)
             self.env['aws.s3.log'].sudo().create({
                 'name': 'Upload',
-                'attachment_name': s3_key.split('/')[-1] if 's3_key' in locals() else 'unknown',
-                's3_key': s3_key if 's3_key' in locals() else 'unknown',
+                'attachment_name': s3_key.split('/')[-1] if s3_key else 'unknown',
+                's3_key': s3_key or 'unknown',
                 'status': 'failed',
-                'message': f'Upload failed: {e} — fell back to local filestore.',
+                'message': f"Upload failed: {e}",
             })
-            return super()._file_write(bin_value, checksum)
+            raise UserError(_("AWS S3 Upload Failed: %s") % str(e))
+
+        values = {
+            'file_size': len(data),
+            'checksum': checksum,
+            'index_content': index_content,
+            'is_s3_stored': True,
+            's3_bucket_id': s3_bucket_id or False,
+            's3_key': s3_key,
+        }
+
+        bucket_prefix = f"{s3_bucket_id}/" if s3_bucket_id else ""
+        if s3_storage_mode == 's3_only':
+            values['store_fname'] = f"s3://{bucket_prefix}{s3_key}"
+            values['db_datas'] = False
+        else:
+            if self._storage() != 'db':
+                values['store_fname'] = self._file_write(data, checksum)
+                values['db_datas'] = False
+            else:
+                values['store_fname'] = False
+                values['db_datas'] = data
+        return values
+
+    # ----------------------------------------------------------
+    # _file_read — intercept s3:// pointers and dual fallback
+    # ----------------------------------------------------------
 
     @api.model
     def _file_read(self, fname):
         if not (fname and fname.startswith('s3://')):
             return super()._file_read(fname)
 
-        s3_key = fname[5:]
-        client, config = self._get_global_s3_client()
-
+        client, bucket_name, s3_key = self._parse_s3_fname(fname)
         if not client:
-            _logger.error('S3 _file_read: no active S3 config for key %s', s3_key)
+            _logger.error('S3 _file_read: no active S3 client for %s', fname)
             return b''
 
         try:
-            response = client.get_object(Bucket=config.bucket_name, Key=s3_key)
+            response = client.get_object(Bucket=bucket_name, Key=s3_key)
             return response['Body'].read()
         except Exception as e:
             _logger.error('S3 _file_read failed for %s: %s', s3_key, e)
@@ -153,10 +294,13 @@ class IrAttachment(models.Model):
         if not (fname and fname.startswith('s3://')):
             return super()._file_delete(fname)
 
-        s3_key = fname[5:]
+        client, bucket_name, s3_key = self._parse_s3_fname(fname)
         try:
-            self.env['aws.s3.delete.queue'].sudo().create({'s3_key': s3_key})
-            _logger.debug('S3 delete queued for key: %s', s3_key)
+            self.env['aws.s3.delete.queue'].sudo().create({
+                's3_key': s3_key,
+                'bucket_name': bucket_name,
+            })
+            _logger.debug('S3 delete queued for key: %s (bucket: %s)', s3_key, bucket_name)
         except Exception as e:
             _logger.error('Failed to queue S3 deletion for %s: %s', s3_key, e)
 
@@ -166,11 +310,11 @@ class IrAttachment(models.Model):
         if not (self.store_fname and self.store_fname.startswith('s3://')):
             return super()._to_http_stream()
 
-        client, config = self._get_global_s3_client()
-        if not client:
-            return super()._to_http_stream()
+        config = self._get_active_s3_config()
+        client, bucket_name, s3_key = self._parse_s3_fname(self.store_fname)
 
-        s3_key = self.store_fname[5:]
+        if not client or not config:
+            return super()._to_http_stream()
 
         try:
             if config.public_bucket:
@@ -178,12 +322,13 @@ class IrAttachment(models.Model):
                     url = f"{config.cdn_url.rstrip('/')}/{s3_key}"
                 else:
                     url = (
-                        f"https://{config.bucket_name}"
+                        f"https://{bucket_name}"
                         f".s3.{config.region_name}.amazonaws.com/{s3_key}"
                     )
             else:
                 url = self._get_cached_presigned_url(
-                    client, config, s3_key,
+                    client, bucket_name, s3_key,
+                    ttl=config.presigned_ttl,
                     mimetype=self.mimetype or None,
                 )
 
@@ -202,21 +347,21 @@ class IrAttachment(models.Model):
             return super()._to_http_stream()
 
     @api.model
-    def _get_cached_presigned_url(self, client, config, s3_key, mimetype=None):
+    def _get_cached_presigned_url(self, client, bucket_name, s3_key, ttl, mimetype=None):
         now = datetime.utcnow()
         cached = _presigned_url_cache.get(s3_key)
 
         if cached and cached[1] > now:
             return cached[0]
 
-        params = {'Bucket': config.bucket_name, 'Key': s3_key}
+        params = {'Bucket': bucket_name, 'Key': s3_key}
         if mimetype:
             params['ResponseContentType'] = mimetype
 
         url = client.generate_presigned_url(
             'get_object',
             Params=params,
-            ExpiresIn=config.presigned_ttl or 3600,
+            ExpiresIn=ttl or 3600,
         )
 
         expires_at = now + timedelta(minutes=_PRESIGNED_CACHE_TTL_MINUTES)
@@ -235,7 +380,7 @@ class IrAttachment(models.Model):
             _presigned_url_cache.pop(k, None)
 
     @api.model
-    def _s3_multipart_upload(self, client, config, s3_key, bin_value, mimetype):
+    def _s3_multipart_upload_custom(self, client, bucket_name, s3_key, bin_value, mimetype):
         import io
         from boto3.s3.transfer import TransferConfig
 
@@ -248,7 +393,7 @@ class IrAttachment(models.Model):
         file_obj = io.BytesIO(bin_value)
         client.upload_fileobj(
             file_obj,
-            config.bucket_name,
+            bucket_name,
             s3_key,
             ExtraArgs={'ContentType': mimetype},
             Config=transfer_config,
@@ -256,33 +401,76 @@ class IrAttachment(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        first_with_model = next(
-            (v for v in vals_list if v.get('res_model')),
-            vals_list[0] if vals_list else {}
-        )
-        ctx = dict(
-            self.env.context,
-            s3_log_model=first_with_model.get('res_model', ''),
-            s3_log_res_id=first_with_model.get('res_id') or 0,
-        )
-        return super(IrAttachment, self.with_context(ctx)).create(vals_list)
+        results = self.env['ir.attachment']
+        config = self._get_active_s3_config()
+
+        for vals in vals_list:
+            res_model = vals.get('res_model', '')
+            res_id = vals.get('res_id') or 0
+            name = vals.get('name', 'attachment')
+
+            rule = self._get_active_s3_rule(res_model) if config else False
+
+            if rule and rule.bucket_id and rule.bucket_id.is_active:
+                s3_key = self._compute_s3_key_static(res_model, res_id, name, rule)
+                ctx = dict(
+                    self.env.context,
+                    s3_log_model=res_model,
+                    s3_log_res_id=res_id,
+                    s3_key=s3_key,
+                    s3_bucket_id=rule.bucket_id.id,
+                    s3_storage_mode=rule.storage_mode,
+                )
+                rec = super(IrAttachment, self.with_context(ctx)).create([vals])
+            else:
+                if config and config.routing_mode == 'global':
+                    ctx = dict(
+                        self.env.context,
+                        s3_log_model=res_model,
+                        s3_log_res_id=res_id,
+                    )
+                    rec = super(IrAttachment, self.with_context(ctx)).create([vals])
+                else:
+                    rec = super(IrAttachment, self).create([vals])
+
+            results |= rec
+        return results
 
     def write(self, vals):
         if 'datas' not in vals and 'raw' not in vals:
             return super().write(vals)
 
+        config = self._get_active_s3_config()
+
         for record in self:
             res_model = vals.get('res_model', record.res_model) or ''
             res_id = vals.get('res_id', record.res_id) or 0
+            name = vals.get('name', record.name) or 'attachment'
 
-            ctx = dict(
-                self.env.context,
-                s3_log_model=res_model,
-                s3_log_res_id=res_id,
-            )
-
+            rule = self._get_active_s3_rule(res_model) if config else False
             old_fname = record.store_fname
-            super(IrAttachment, record.with_context(ctx)).write(vals)
+
+            if rule and rule.bucket_id and rule.bucket_id.is_active:
+                s3_key = self._compute_s3_key_static(res_model, res_id, name, rule)
+                ctx = dict(
+                    self.env.context,
+                    s3_log_model=res_model,
+                    s3_log_res_id=res_id,
+                    s3_key=s3_key,
+                    s3_bucket_id=rule.bucket_id.id,
+                    s3_storage_mode=rule.storage_mode,
+                )
+                super(IrAttachment, record.with_context(ctx)).write(vals)
+            else:
+                if config and config.routing_mode == 'global':
+                    ctx = dict(
+                        self.env.context,
+                        s3_log_model=res_model,
+                        s3_log_res_id=res_id,
+                    )
+                    super(IrAttachment, record.with_context(ctx)).write(vals)
+                else:
+                    super(IrAttachment, record).write(vals)
 
             if old_fname and old_fname.startswith('s3://'):
                 if record.store_fname != old_fname:
@@ -292,9 +480,12 @@ class IrAttachment(models.Model):
 
     def _mark_for_gc(self, fname):
         if fname and fname.startswith('s3://'):
-            s3_key = fname[5:]
+            client, bucket_name, s3_key = self._parse_s3_fname(fname)
             try:
-                self.env['aws.s3.delete.queue'].sudo().create({'s3_key': s3_key})
+                self.env['aws.s3.delete.queue'].sudo().create({
+                    's3_key': s3_key,
+                    'bucket_name': bucket_name,
+                })
             except Exception as e:
                 _logger.error('Failed to queue S3 GC for %s: %s', s3_key, e)
             return
