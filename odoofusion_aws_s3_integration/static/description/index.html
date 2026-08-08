@@ -1,26 +1,13 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Odoo AWS S3 Integration for Attachments | Odoo 18</title>
-    <meta name="description" content="Connect Odoo 18 with Amazon S3 to store, browse, monitor, and manage Sale Order attachments using flexible cloud, dual, or local storage modes.">
-</head>
-<body style="margin:0;background:#f8fafc;">
-<div class="container" style="max-width:1200px;margin:0 auto;padding:24px 15px;font-family:Inter,Arial,Helvetica,sans-serif;color:#0f172a;line-height:1.65;">
+<div class="container" style="max-width:1200px;margin:0 auto;padding:24px 15px;font-family:Inter,Arial,Helvetica,sans-serif;color:#0f172a;line-height:1.65;background-color:#f8fafc;">
 
     <!-- HERO -->
-    <section style="position:relative;overflow:hidden;padding:70px 40px;border-radius:28px;background:linear-gradient(135deg,#111827 0%,#312e81 55%,#7c3aed 100%);box-shadow:0 25px 70px rgba(49,46,129,.28);margin-bottom:42px;">
-        <div style="position:absolute;top:-120px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.08);"></div>
-        <div style="position:absolute;bottom:-150px;left:-80px;width:280px;height:280px;border-radius:50%;background:rgba(14,165,233,.12);"></div>
-
-        <div class="row align-items-center g-5" style="position:relative;z-index:2;">
+    <section style="overflow:hidden;padding:70px 40px;border-radius:28px;background-color:#1e1b4b;margin-bottom:42px;border:1px solid #312e81;">
+        <div class="row align-items-center g-5">
             <div class="col-12 col-lg-7">
                 <div style="margin-bottom:24px;">
                     <img src="logo.png" alt="OdooFusion Logo" height="35" style="max-height:35px;"/>
                 </div>
-                <div style="display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);border-radius:999px;color:#e0e7ff;font-size:13px;font-weight:700;margin-bottom:20px;">
+                <div style="display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid #4338ca;background-color:#2e2a85;border-radius:999px;color:#e0e7ff;font-size:13px;font-weight:700;margin-bottom:20px;">
                     <i class="fa fa-cloud" aria-hidden="true"></i>
                     Odoo 18 • Amazon S3 • Cloud Attachment Storage
                 </div>
@@ -34,21 +21,21 @@
                 </p>
 
                 <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px;">
-                    <span style="padding:9px 14px;background:#ffffff;color:#312e81;border-radius:10px;font-size:14px;font-weight:700;">Odoo 18 Ready</span>
-                    <span style="padding:9px 14px;background:rgba(255,255,255,.12);color:#ffffff;border:1px solid rgba(255,255,255,.16);border-radius:10px;font-size:14px;font-weight:700;">AWS S3 Only</span>
-                    <span style="padding:9px 14px;background:rgba(255,255,255,.12);color:#ffffff;border:1px solid rgba(255,255,255,.16);border-radius:10px;font-size:14px;font-weight:700;">Dual Storage</span>
-                    <span style="padding:9px 14px;background:rgba(255,255,255,.12);color:#ffffff;border:1px solid rgba(255,255,255,.16);border-radius:10px;font-size:14px;font-weight:700;">Built-in File Explorer</span>
+                    <span style="padding:9px 14px;background-color:#ffffff;color:#312e81;border-radius:10px;font-size:14px;font-weight:700;">Odoo 18 Ready</span>
+                    <span style="padding:9px 14px;background-color:#2e2a85;color:#ffffff;border:1px solid #4338ca;border-radius:10px;font-size:14px;font-weight:700;">AWS S3 Only</span>
+                    <span style="padding:9px 14px;background-color:#2e2a85;color:#ffffff;border:1px solid #4338ca;border-radius:10px;font-size:14px;font-weight:700;">Dual Storage</span>
+                    <span style="padding:9px 14px;background-color:#2e2a85;color:#ffffff;border:1px solid #4338ca;border-radius:10px;font-size:14px;font-weight:700;">Built-in File Explorer</span>
                 </div>
 
                 <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
-                    <a href="#features" style="display:inline-block;padding:13px 22px;background:#ffffff;color:#312e81;text-decoration:none;border-radius:12px;font-weight:800;box-shadow:0 12px 25px rgba(0,0,0,.18);">Explore Features</a>
+                    <a href="#features" style="display:inline-block;padding:13px 22px;background-color:#ffffff;color:#312e81;text-decoration:none;border-radius:12px;font-weight:800;">Explore Features</a>
                     <span style="color:#c7d2fe;font-size:14px;">Developed by OdooFusion</span>
                 </div>
             </div>
 
             <div class="col-12 col-lg-5">
-                <div style="background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);padding:20px;border-radius:24px;box-shadow:0 18px 45px rgba(0,0,0,.22);">
-                    <div style="background:#ffffff;border-radius:18px;padding:20px;">
+                <div style="background-color:#2e2a85;border:1px solid #4338ca;padding:20px;border-radius:24px;">
+                    <div style="background-color:#ffffff;border-radius:18px;padding:20px;">
                         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
                             <div style="display:flex;align-items:center;gap:10px;">
                                 <img src="icon.png" alt="Odoo AWS S3 Integration module by OdooFusion" width="52" height="52" style="border-radius:14px;">
@@ -57,37 +44,37 @@
                                     <div style="font-size:12px;color:#64748b;">Real-time sync status</div>
                                 </div>
                             </div>
-                            <span style="padding:6px 10px;background:#dcfce7;color:#166534;border-radius:999px;font-size:12px;font-weight:800;">Connected</span>
+                            <span style="padding:6px 10px;background-color:#dcfce7;color:#166534;border-radius:999px;font-size:12px;font-weight:800;">Connected</span>
                         </div>
 
                         <div class="row g-3">
                             <div class="col-6">
-                                <div style="padding:16px;background:#eef2ff;border-radius:14px;">
+                                <div style="padding:16px;background-color:#eef2ff;border-radius:14px;">
                                     <div style="font-size:12px;color:#6366f1;font-weight:700;">SYNCED FILES</div>
                                     <div style="font-size:28px;font-weight:800;color:#1e1b4b;">1,248</div>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div style="padding:16px;background:#ecfdf5;border-radius:14px;">
+                                <div style="padding:16px;background-color:#ecfdf5;border-radius:14px;">
                                     <div style="font-size:12px;color:#059669;font-weight:700;">SUCCESS RATE</div>
                                     <div style="font-size:28px;font-weight:800;color:#064e3b;">99.9%</div>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div style="padding:16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;">
+                                <div style="padding:16px;background-color:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;">
                                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                                         <span style="font-size:13px;font-weight:700;color:#334155;">Storage usage</span>
                                         <span style="font-size:13px;font-weight:800;color:#7c3aed;">72%</span>
                                     </div>
-                                    <div style="height:10px;background:#e2e8f0;border-radius:999px;overflow:hidden;">
-                                        <div style="width:72%;height:100%;background:linear-gradient(90deg,#6366f1,#8b5cf6);border-radius:999px;"></div>
+                                    <div style="height:10px;background-color:#e2e8f0;border-radius:999px;overflow:hidden;">
+                                        <div style="width:72%;height:100%;background-color:#7c3aed;border-radius:999px;"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div style="margin-top:16px;padding:14px;background:#f8fafc;border-radius:14px;display:flex;align-items:center;gap:12px;">
-                            <div style="width:36px;height:36px;border-radius:10px;background:#ede9fe;display:flex;align-items:center;justify-content:center;color:#7c3aed;">
+                        <div style="margin-top:16px;padding:14px;background-color:#f8fafc;border-radius:14px;display:flex;align-items:center;gap:12px;">
+                            <div style="width:36px;height:36px;border-radius:10px;background-color:#ede9fe;display:flex;align-items:center;justify-content:center;color:#7c3aed;">
                                 <i class="fa fa-check" aria-hidden="true"></i>
                             </div>
                             <div>
@@ -105,25 +92,25 @@
     <section style="margin-bottom:42px;">
         <div class="row g-3 text-center">
             <div class="col-6 col-md-3">
-                <div style="padding:22px;background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;box-shadow:0 8px 24px rgba(15,23,42,.05);">
+                <div style="padding:22px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
                     <div style="font-size:30px;font-weight:800;color:#4f46e5;">3</div>
                     <div style="font-size:13px;color:#64748b;font-weight:700;">Storage Modes</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div style="padding:22px;background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;box-shadow:0 8px 24px rgba(15,23,42,.05);">
+                <div style="padding:22px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
                     <div style="font-size:30px;font-weight:800;color:#0ea5e9;">24/7</div>
                     <div style="font-size:13px;color:#64748b;font-weight:700;">File Availability</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div style="padding:22px;background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;box-shadow:0 8px 24px rgba(15,23,42,.05);">
+                <div style="padding:22px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
                     <div style="font-size:30px;font-weight:800;color:#10b981;">Live</div>
                     <div style="font-size:13px;color:#64748b;font-weight:700;">Sync Monitoring</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div style="padding:22px;background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;box-shadow:0 8px 24px rgba(15,23,42,.05);">
+                <div style="padding:22px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
                     <div style="font-size:30px;font-weight:800;color:#f59e0b;">S3</div>
                     <div style="font-size:13px;color:#64748b;font-weight:700;">Cloud Storage</div>
                 </div>
@@ -135,8 +122,8 @@
     <section style="margin-bottom:52px;">
         <div class="row g-4 align-items-stretch">
             <div class="col-12 col-lg-8">
-                <div style="height:100%;padding:38px;background:#ffffff;border:1px solid #e2e8f0;border-radius:24px;box-shadow:0 16px 40px rgba(15,23,42,.06);">
-                    <span style="display:inline-block;padding:7px 12px;background:#eef2ff;color:#4f46e5;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:16px;">CLOUD STORAGE FOR ODOO</span>
+                <div style="height:100%;padding:38px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:24px;">
+                    <span style="display:inline-block;padding:7px 12px;background-color:#eef2ff;color:#4f46e5;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:16px;">CLOUD STORAGE FOR ODOO</span>
                     <h2 style="font-size:34px;line-height:1.25;font-weight:800;letter-spacing:-.8px;margin:0 0 18px;color:#0f172a;">Move Supported Odoo Attachments to Amazon S3</h2>
                     <p style="font-size:17px;color:#475569;margin:0 0 14px;">
                         The <strong>Odoo AWS S3 Integration</strong> module connects Odoo 18 with Amazon Simple Storage Service and routes supported Sale Order attachments to your configured S3 bucket.
@@ -147,8 +134,8 @@
                 </div>
             </div>
             <div class="col-12 col-lg-4">
-                <div style="height:100%;padding:32px;background:linear-gradient(180deg,#fff7ed,#fffbeb);border:1px solid #fed7aa;border-radius:24px;">
-                    <div style="width:48px;height:48px;border-radius:14px;background:#ffedd5;color:#ea580c;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+                <div style="height:100%;padding:32px;background-color:#fffbeb;border:1px solid #fed7aa;border-radius:24px;">
+                    <div style="width:48px;height:48px;border-radius:14px;background-color:#ffedd5;color:#ea580c;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
                         <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
                     </div>
                     <h3 style="font-size:22px;font-weight:800;color:#9a3412;margin:0 0 12px;">Current Module Scope</h3>
@@ -163,15 +150,15 @@
     <!-- FEATURE GRID -->
     <section id="features" style="margin-bottom:58px;">
         <div class="text-center" style="max-width:760px;margin:0 auto 36px;">
-            <span style="display:inline-block;padding:7px 12px;background:#ede9fe;color:#7c3aed;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">CORE FEATURES</span>
+            <span style="display:inline-block;padding:7px 12px;background-color:#ede9fe;color:#7c3aed;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">CORE FEATURES</span>
             <h2 style="font-size:38px;line-height:1.2;font-weight:800;letter-spacing:-1px;margin:0 0 14px;">Everything You Need to Manage Odoo Attachments on S3</h2>
             <p style="font-size:17px;color:#64748b;margin:0;">A complete cloud-storage workflow for Sale Order attachments inside Odoo.</p>
         </div>
 
         <div class="row g-4">
             <div class="col-12 col-md-6 col-lg-4">
-                <div style="height:100%;padding:28px;background:#ffffff;border:1px solid #e2e8f0;border-radius:22px;box-shadow:0 12px 35px rgba(15,23,42,.05);">
-                    <div style="width:52px;height:52px;border-radius:15px;background:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                <div style="height:100%;padding:28px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
+                    <div style="width:52px;height:52px;border-radius:15px;background-color:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
                         <i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i>
                     </div>
                     <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">AWS S3 Only Mode</h3>
@@ -180,8 +167,8 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
-                <div style="height:100%;padding:28px;background:#ffffff;border:1px solid #e2e8f0;border-radius:22px;box-shadow:0 12px 35px rgba(15,23,42,.05);">
-                    <div style="width:52px;height:52px;border-radius:15px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                <div style="height:100%;padding:28px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
+                    <div style="width:52px;height:52px;border-radius:15px;background-color:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
                         <i class="fa fa-files-o fa-lg" aria-hidden="true"></i>
                     </div>
                     <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Dual Storage Mode</h3>
@@ -190,8 +177,8 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
-                <div style="height:100%;padding:28px;background:#ffffff;border:1px solid #e2e8f0;border-radius:22px;box-shadow:0 12px 35px rgba(15,23,42,.05);">
-                    <div style="width:52px;height:52px;border-radius:15px;background:#f1f5f9;color:#475569;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                <div style="height:100%;padding:28px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
+                    <div style="width:52px;height:52px;border-radius:15px;background-color:#f1f5f9;color:#475569;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
                         <i class="fa fa-hdd-o fa-lg" aria-hidden="true"></i>
                     </div>
                     <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Odoo Only Mode</h3>
@@ -200,8 +187,8 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
-                <div style="height:100%;padding:28px;background:#ffffff;border:1px solid #e2e8f0;border-radius:22px;box-shadow:0 12px 35px rgba(15,23,42,.05);">
-                    <div style="width:52px;height:52px;border-radius:15px;background:#faf5ff;color:#7c3aed;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                <div style="height:100%;padding:28px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
+                    <div style="width:52px;height:52px;border-radius:15px;background-color:#faf5ff;color:#7c3aed;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
                         <i class="fa fa-folder-open-o fa-lg" aria-hidden="true"></i>
                     </div>
                     <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">S3 File Explorer</h3>
@@ -210,8 +197,8 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
-                <div style="height:100%;padding:28px;background:#ffffff;border:1px solid #e2e8f0;border-radius:22px;box-shadow:0 12px 35px rgba(15,23,42,.05);">
-                    <div style="width:52px;height:52px;border-radius:15px;background:#ecfeff;color:#0891b2;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                <div style="height:100%;padding:28px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
+                    <div style="width:52px;height:52px;border-radius:15px;background-color:#ecfeff;color:#0891b2;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
                         <i class="fa fa-tachometer fa-lg" aria-hidden="true"></i>
                     </div>
                     <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Sync Monitor</h3>
@@ -220,8 +207,8 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
-                <div style="height:100%;padding:28px;background:#ffffff;border:1px solid #e2e8f0;border-radius:22px;box-shadow:0 12px 35px rgba(15,23,42,.05);">
-                    <div style="width:52px;height:52px;border-radius:15px;background:#fff7ed;color:#ea580c;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                <div style="height:100%;padding:28px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
+                    <div style="width:52px;height:52px;border-radius:15px;background-color:#fff7ed;color:#ea580c;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
                         <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
                     </div>
                     <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Flexible Sync Rules</h3>
@@ -235,18 +222,18 @@
     <section style="margin-bottom:58px;">
         <div class="row g-4 align-items-center">
             <div class="col-12 col-lg-6">
-                <div style="padding:36px;background:linear-gradient(145deg,#eef2ff,#ffffff);border:1px solid #c7d2fe;border-radius:26px;">
+                <div style="padding:36px;background-color:#f5f7ff;border:1px solid #c7d2fe;border-radius:26px;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;">
                         <div>
                             <div style="font-size:12px;font-weight:800;color:#6366f1;">S3 FILE EXPLORER</div>
                             <div style="font-size:22px;font-weight:800;color:#111827;">Bucket: company-documents</div>
                         </div>
-                        <div style="width:44px;height:44px;background:#4f46e5;color:#fff;border-radius:13px;display:flex;align-items:center;justify-content:center;">
+                        <div style="width:44px;height:44px;background-color:#4f46e5;color:#ffffff;border-radius:13px;display:flex;align-items:center;justify-content:center;">
                             <i class="fa fa-folder-open" aria-hidden="true"></i>
                         </div>
                     </div>
 
-                    <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;">
+                    <div style="background-color:#ffffff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;">
                         <div style="padding:13px 16px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;font-size:12px;color:#64748b;font-weight:700;">
                             <span>NAME</span><span>SIZE</span>
                         </div>
@@ -264,54 +251,54 @@
             </div>
 
             <div class="col-12 col-lg-6">
-                <span style="display:inline-block;padding:7px 12px;background:#ede9fe;color:#7c3aed;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">BUILT-IN FILE MANAGEMENT</span>
+                <span style="display:inline-block;padding:7px 12px;background-color:#ede9fe;color:#7c3aed;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">BUILT-IN FILE MANAGEMENT</span>
                 <h2 style="font-size:36px;line-height:1.2;font-weight:800;letter-spacing:-.8px;margin:0 0 18px;">Browse Amazon S3 Files Without Leaving Odoo</h2>
                 <p style="font-size:17px;color:#64748b;margin:0 0 22px;">
                     The integrated file explorer gives administrators direct access to configured bucket folders and files from the Odoo backend.
                 </p>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-                    <div style="padding:15px;background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Browse folders</div>
-                    <div style="padding:15px;background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Search files</div>
-                    <div style="padding:15px;background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Download objects</div>
-                    <div style="padding:15px;background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>View metadata</div>
+                    <div style="padding:15px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Browse folders</div>
+                    <div style="padding:15px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Search files</div>
+                    <div style="padding:15px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Download objects</div>
+                    <div style="padding:15px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>View metadata</div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- WORKFLOW -->
-    <section style="padding:46px 32px;background:#0f172a;border-radius:28px;margin-bottom:58px;color:#ffffff;">
+    <section style="padding:46px 32px;background-color:#0f172a;border-radius:28px;margin-bottom:58px;color:#ffffff;">
         <div class="text-center" style="max-width:720px;margin:0 auto 36px;">
-            <span style="display:inline-block;padding:7px 12px;background:rgba(255,255,255,.1);color:#c7d2fe;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">ATTACHMENT WORKFLOW</span>
+            <span style="display:inline-block;padding:7px 12px;background-color:#1e293b;color:#c7d2fe;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">ATTACHMENT WORKFLOW</span>
             <h2 style="font-size:36px;line-height:1.2;font-weight:800;margin:0 0 14px;color:#ffffff;">How Odoo AWS S3 Attachment Storage Works</h2>
             <p style="font-size:17px;color:#94a3b8;margin:0;">A simple four-step process that keeps the user experience inside Odoo.</p>
         </div>
 
         <div class="row g-4">
             <div class="col-12 col-md-6 col-lg-3">
-                <div style="height:100%;padding:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:18px;">
-                    <div style="width:42px;height:42px;border-radius:12px;background:#4f46e5;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">1</div>
+                <div style="height:100%;padding:24px;background-color:#1e293b;border:1px solid #334155;border-radius:18px;">
+                    <div style="width:42px;height:42px;border-radius:12px;background-color:#4f46e5;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">1</div>
                     <h3 style="font-size:20px;color:#ffffff;font-weight:800;">Upload</h3>
                     <p style="color:#cbd5e1;margin:0;">A user uploads a file to a Sale Order through Odoo chatter or the attachment interface.</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
-                <div style="height:100%;padding:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:18px;">
-                    <div style="width:42px;height:42px;border-radius:12px;background:#7c3aed;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">2</div>
+                <div style="height:100%;padding:24px;background-color:#1e293b;border:1px solid #334155;border-radius:18px;">
+                    <div style="width:42px;height:42px;border-radius:12px;background-color:#7c3aed;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">2</div>
                     <h3 style="font-size:20px;color:#ffffff;font-weight:800;">Rule Check</h3>
                     <p style="color:#cbd5e1;margin:0;">The module evaluates the active storage rule configured for <code>sale.order</code>.</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
-                <div style="height:100%;padding:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:18px;">
-                    <div style="width:42px;height:42px;border-radius:12px;background:#0ea5e9;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">3</div>
+                <div style="height:100%;padding:24px;background-color:#1e293b;border:1px solid #334155;border-radius:18px;">
+                    <div style="width:42px;height:42px;border-radius:12px;background-color:#0ea5e9;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">3</div>
                     <h3 style="font-size:20px;color:#ffffff;font-weight:800;">S3 Storage</h3>
                     <p style="color:#cbd5e1;margin:0;">The file is stored using AWS S3 Only, Dual Storage, or Odoo Only mode.</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
-                <div style="height:100%;padding:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:18px;">
-                    <div style="width:42px;height:42px;border-radius:12px;background:#10b981;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">4</div>
+                <div style="height:100%;padding:24px;background-color:#1e293b;border:1px solid #334155;border-radius:18px;">
+                    <div style="width:42px;height:42px;border-radius:12px;background-color:#10b981;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">4</div>
                     <h3 style="font-size:20px;color:#ffffff;font-weight:800;">Retrieve</h3>
                     <p style="color:#cbd5e1;margin:0;">Odoo retrieves and serves the attachment from its configured storage location.</p>
                 </div>
@@ -322,15 +309,15 @@
     <!-- CONFIGURATION -->
     <section style="margin-bottom:58px;">
         <div class="text-center" style="max-width:720px;margin:0 auto 34px;">
-            <span style="display:inline-block;padding:7px 12px;background:#ecfdf5;color:#059669;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">QUICK SETUP</span>
+            <span style="display:inline-block;padding:7px 12px;background-color:#ecfdf5;color:#059669;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">QUICK SETUP</span>
             <h2 style="font-size:36px;line-height:1.2;font-weight:800;letter-spacing:-.8px;margin:0 0 14px;">Configure Odoo AWS S3 in Two Steps</h2>
         </div>
 
         <div class="row g-4">
             <div class="col-12 col-lg-6">
-                <div style="height:100%;padding:32px;background:#ffffff;border:1px solid #e2e8f0;border-radius:22px;box-shadow:0 12px 34px rgba(15,23,42,.05);">
+                <div style="height:100%;padding:32px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
                     <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px;">
-                        <div style="width:46px;height:46px;border-radius:13px;background:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-weight:800;">01</div>
+                        <div style="width:46px;height:46px;border-radius:13px;background-color:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-weight:800;">01</div>
                         <h3 style="font-size:24px;font-weight:800;margin:0;">Connect Your S3 Bucket</h3>
                     </div>
                     <ol style="padding-left:20px;color:#475569;margin:0;">
@@ -343,9 +330,9 @@
             </div>
 
             <div class="col-12 col-lg-6">
-                <div style="height:100%;padding:32px;background:#ffffff;border:1px solid #e2e8f0;border-radius:22px;box-shadow:0 12px 34px rgba(15,23,42,.05);">
+                <div style="height:100%;padding:32px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
                     <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px;">
-                        <div style="width:46px;height:46px;border-radius:13px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;font-weight:800;">02</div>
+                        <div style="width:46px;height:46px;border-radius:13px;background-color:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;font-weight:800;">02</div>
                         <h3 style="font-size:24px;font-weight:800;margin:0;">Create a Sync Rule</h3>
                     </div>
                     <ol style="padding-left:20px;color:#475569;margin:0;">
@@ -362,25 +349,25 @@
 
     <!-- REQUIREMENTS -->
     <section style="margin-bottom:58px;">
-        <div style="padding:34px;background:linear-gradient(135deg,#eff6ff,#ffffff);border:1px solid #bfdbfe;border-radius:24px;">
+        <div style="padding:34px;background-color:#f0f7ff;border:1px solid #bfdbfe;border-radius:24px;">
             <div class="row g-4 align-items-center">
                 <div class="col-12 col-lg-4">
-                    <span style="display:inline-block;padding:7px 12px;background:#dbeafe;color:#1d4ed8;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">REQUIREMENTS</span>
+                    <span style="display:inline-block;padding:7px 12px;background-color:#dbeafe;color:#1d4ed8;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">REQUIREMENTS</span>
                     <h2 style="font-size:30px;line-height:1.25;font-weight:800;margin:0;">Compatibility and Setup Requirements</h2>
                 </div>
                 <div class="col-12 col-lg-8">
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
-                            <div style="padding:16px;background:#ffffff;border:1px solid #dbeafe;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#2563eb;"></i>Odoo 18</div>
+                            <div style="padding:16px;background-color:#ffffff;border:1px solid #dbeafe;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#2563eb;"></i>Odoo 18</div>
                         </div>
                         <div class="col-12 col-md-6">
-                            <div style="padding:16px;background:#ffffff;border:1px solid #dbeafe;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#2563eb;"></i>Amazon S3 bucket</div>
+                            <div style="padding:16px;background-color:#ffffff;border:1px solid #dbeafe;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#2563eb;"></i>Amazon S3 bucket</div>
                         </div>
                         <div class="col-12 col-md-6">
-                            <div style="padding:16px;background:#ffffff;border:1px solid #dbeafe;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#2563eb;"></i>AWS credentials with bucket permissions</div>
+                            <div style="padding:16px;background-color:#ffffff;border:1px solid #dbeafe;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#2563eb;"></i>AWS credentials with bucket permissions</div>
                         </div>
                         <div class="col-12 col-md-6">
-                            <div style="padding:16px;background:#ffffff;border:1px solid #dbeafe;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#2563eb;"></i>Odoo Sales application</div>
+                            <div style="padding:16px;background-color:#ffffff;border:1px solid #dbeafe;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#2563eb;"></i>Odoo Sales application</div>
                         </div>
                     </div>
                 </div>
@@ -391,24 +378,24 @@
     <!-- FAQ -->
     <section style="margin-bottom:58px;">
         <div class="text-center" style="max-width:720px;margin:0 auto 34px;">
-            <span style="display:inline-block;padding:7px 12px;background:#f1f5f9;color:#475569;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">FAQ</span>
+            <span style="display:inline-block;padding:7px 12px;background-color:#f1f5f9;color:#475569;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">FAQ</span>
             <h2 style="font-size:36px;line-height:1.2;font-weight:800;letter-spacing:-.8px;margin:0;">Frequently Asked Questions</h2>
         </div>
 
         <div style="display:grid;gap:14px;">
-            <div style="padding:24px;background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
+            <div style="padding:24px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
                 <h3 style="font-size:19px;font-weight:800;margin:0 0 8px;">Which Odoo records are supported?</h3>
                 <p style="margin:0;color:#64748b;">The current version supports attachments linked to Sale Orders through the <code>sale.order</code> model.</p>
             </div>
-            <div style="padding:24px;background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
+            <div style="padding:24px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
                 <h3 style="font-size:19px;font-weight:800;margin:0 0 8px;">Can files remain in Odoo after being uploaded to S3?</h3>
                 <p style="margin:0;color:#64748b;">Yes. Use Dual Storage to keep copies in both Odoo and Amazon S3.</p>
             </div>
-            <div style="padding:24px;background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
+            <div style="padding:24px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
                 <h3 style="font-size:19px;font-weight:800;margin:0 0 8px;">Can administrators browse S3 files from Odoo?</h3>
                 <p style="margin:0;color:#64748b;">Yes. The built-in file explorer provides folder browsing, search, file information, download, and permitted delete actions.</p>
             </div>
-            <div style="padding:24px;background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
+            <div style="padding:24px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
                 <h3 style="font-size:19px;font-weight:800;margin:0 0 8px;">Does the module include synchronization reporting?</h3>
                 <p style="margin:0;color:#64748b;">Yes. The dashboard shows connection health, successful uploads, failures, recent activity, and related Odoo records.</p>
             </div>
@@ -416,12 +403,11 @@
     </section>
 
     <!-- CTA -->
-    <section style="position:relative;overflow:hidden;padding:54px 34px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:28px;text-align:center;color:#ffffff;box-shadow:0 20px 50px rgba(79,70,229,.24);">
-        <div style="position:absolute;top:-100px;left:-50px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.08);"></div>
+    <section style="overflow:hidden;padding:54px 34px;background-color:#4f46e5;border-radius:28px;text-align:center;color:#ffffff;">
         <div style="position:relative;z-index:2;max-width:760px;margin:0 auto;">
             <h2 style="font-size:36px;line-height:1.2;font-weight:800;margin:0 0 14px;color:#ffffff;">Ready to Connect Odoo with Amazon S3?</h2>
             <p style="font-size:17px;color:#e0e7ff;margin:0 0 24px;">Get support, setup assistance, or customization services from OdooFusion.</p>
-            <a href="https://odoofusion.net" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:13px 24px;background:#ffffff;color:#4f46e5;text-decoration:none;border-radius:12px;font-weight:800;">Visit OdooFusion</a>
+            <a href="https://odoofusion.net" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:13px 24px;background-color:#ffffff;color:#4f46e5;text-decoration:none;border-radius:12px;font-weight:800;">Visit OdooFusion</a>
         </div>
     </section>
 
@@ -431,5 +417,3 @@
     </footer>
 
 </div>
-</body>
-</html>
