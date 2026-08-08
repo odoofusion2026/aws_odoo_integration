@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+# Author: Metamorphosis, Joyanto
+
 from odoo import models, fields
+
 
 class AwsS3Log(models.Model):
     _name = 'aws.s3.log'

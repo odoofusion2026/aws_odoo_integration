@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# Author: Metamorphosis, Joyanto
+
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
@@ -37,11 +39,9 @@ class AwsS3Bucket(models.Model):
         self.ensure_one()
         try:
             client = self._get_s3_client(self)
-            # Verify bucket existence and permission
             client.head_bucket(Bucket=self.name)
             self.write({'state': 'connected'})
             
-            # Log connection success
             self.env['aws.s3.log'].sudo().create({
                 'name': 'Connection Test',
                 'attachment_name': 'N/A',
@@ -62,7 +62,6 @@ class AwsS3Bucket(models.Model):
             }
         except Exception as e:
             self.write({'state': 'failed'})
-            # Log connection failure
             self.env['aws.s3.log'].sudo().create({
                 'name': 'Connection Test',
                 'attachment_name': 'N/A',

@@ -19,7 +19,7 @@
                     <notebook>
                         <page string="Contents" name="contents">
                             <field name="item_ids" readonly="1" nolabel="1">
-                                <list create="false" edit="false" delete="false">
+                                <tree create="false" edit="false" delete="false">
                                     <field name="name" string="Name"/>
                                     <field name="type" string="Type"/>
                                     <field name="size" string="Size"/>
@@ -31,7 +31,7 @@
                                     <button name="action_delete_file" string="Delete" type="object" icon="fa-trash" 
                                             invisible="type != 'file'" 
                                             confirm="Are you sure you want to permanently delete this object from AWS S3?"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                     </notebook>
@@ -57,13 +57,5 @@
         <field name="res_model">aws.s3.file.explorer</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                AWS S3 File Explorer.
-            </p>
-            <p>
-                Browse directories, open subfolders, download documents, or remove objects on your AWS S3 buckets in real-time.
-            </p>
-        </field>
     </record>
 </odoo>

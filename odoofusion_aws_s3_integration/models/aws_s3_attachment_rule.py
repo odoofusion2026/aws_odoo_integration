@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+# Author: Metamorphosis, Joyanto
+
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
+
 
 class AwsS3AttachmentRule(models.Model):
     _name = 'aws.s3.attachment.rule'
@@ -30,6 +33,21 @@ class AwsS3AttachmentRule(models.Model):
             else:
                 rule.name = "New Sync Rule"
 
+    def write(self, vals):
+        res = super().write(vals)
+        self.env.registry.clear_cache()
+        return res
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
+        self.env.registry.clear_cache()
+        return res
+
+    def unlink(self):
+        res = super().unlink()
+        self.env.registry.clear_cache()
+        return res
 
     @api.constrains('root_folder')
     def _check_root_folder(self):
@@ -42,10 +60,8 @@ class AwsS3AttachmentRule(models.Model):
         if not self.bucket_id.is_active:
             raise UserError(_("AWS S3 Bucket is inactive."))
         if self.bucket_id.state != 'connected':
-            # Run test connection
             self.bucket_id.action_test_connection()
 
-        # Find attachments of this model that are not stored on S3 yet
         attachments = self.env['ir.attachment'].search([
             ('res_model', '=', self.model_id.model),
             ('is_s3_stored', '=', False),
@@ -69,17 +85,14 @@ class AwsS3AttachmentRule(models.Model):
 
         for attach in attachments:
             try:
-                # Get the binary data
                 data = attach.raw
                 if not data:
                     continue
 
-                # Generate the key
                 s3_key = attach._get_s3_path(rule=self)
                 if not s3_key:
                     continue
 
-                # Upload to S3
                 client = self.bucket_id._get_s3_client(self.bucket_id)
                 mimetype = attach.mimetype or 'application/octet-stream'
                 client.put_object(
@@ -91,7 +104,6 @@ class AwsS3AttachmentRule(models.Model):
 
                 old_store_fname = attach.store_fname
                 
-                # Update attachment properties
                 if self.storage_mode == 's3_only':
                     attach.sudo().write({
                         'store_fname': f"s3://{self.bucket_id.id}/{s3_key}",
@@ -100,17 +112,15 @@ class AwsS3AttachmentRule(models.Model):
                         's3_bucket_id': self.bucket_id.id,
                         's3_key': s3_key,
                     })
-                    # Clean up local filestore file
                     if old_store_fname:
                         attach._file_delete(old_store_fname)
-                else:  # dual storage
+                else:
                     attach.sudo().write({
                         'is_s3_stored': True,
                         's3_bucket_id': self.bucket_id.id,
                         's3_key': s3_key,
                     })
 
-                # Create Log
                 self.env['aws.s3.log'].sudo().create({
                     'name': 'Migration Upload',
                     'attachment_name': attach.name,

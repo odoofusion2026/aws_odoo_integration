@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_aws_s3_bucket_tree" model="ir.ui.view">
-        <field name="name">aws.s3.bucket.list</field>
+        <field name="name">aws.s3.bucket.tree</field>
         <field name="model">aws.s3.bucket</field>
         <field name="arch" type="xml">
-            <list string="AWS S3 Buckets">
+            <tree string="AWS S3 Buckets">
                 <field name="name"/>
                 <field name="region_name"/>
                 <field name="state" widget="badge" 
@@ -12,7 +12,7 @@
                        decoration-danger="state == 'failed'" 
                        decoration-info="state == 'draft'"/>
                 <field name="is_active" widget="boolean_toggle"/>
-            </list>
+            </tree>
         </field>
     </record>
 
@@ -49,13 +49,10 @@
     <record id="action_aws_s3_bucket" model="ir.actions.act_window">
         <field name="name">AWS S3 Buckets</field>
         <field name="res_model">aws.s3.bucket</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">tree,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Configure your AWS S3 bucket connection.
-            </p>
-            <p>
-                Ensure that your AWS IAM credentials have sufficient permissions to read/write/delete objects in the S3 bucket.
             </p>
         </field>
     </record>
