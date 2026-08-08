@@ -17,7 +17,7 @@
                 </h1>
 
                 <p style="font-size:20px;color:#dbeafe;max-width:760px;margin:0 0 28px;">
-                    Store, browse, monitor, and manage Odoo Sale Order attachments on Amazon S3 without changing the way your team works inside Odoo.
+                    Store, browse, monitor, and manage attachments and images across all Odoo models (including Products, Sales, Invoices, Web Assets, and custom models) on Amazon S3 without changing the way your team works inside Odoo.
                 </p>
 
                 <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px;">
@@ -79,7 +79,7 @@
                             </div>
                             <div>
                                 <div style="font-size:13px;font-weight:800;color:#0f172a;">Latest sync completed</div>
-                                <div style="font-size:12px;color:#64748b;">All Sale Order attachments processed</div>
+                                <div style="font-size:12px;color:#64748b;">All Odoo attachments and web assets processed</div>
                             </div>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
                     <span style="display:inline-block;padding:7px 12px;background-color:#eef2ff;color:#4f46e5;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:16px;">CLOUD STORAGE FOR ODOO</span>
                     <h2 style="font-size:34px;line-height:1.25;font-weight:800;letter-spacing:-.8px;margin:0 0 18px;color:#0f172a;">Move Supported Odoo Attachments to Amazon S3</h2>
                     <p style="font-size:17px;color:#475569;margin:0 0 14px;">
-                        The <strong>Odoo AWS S3 Integration</strong> module connects Odoo 17 with Amazon Simple Storage Service and routes supported Sale Order attachments to your configured S3 bucket.
+                        The <strong>Odoo AWS S3 Integration</strong> module connects Odoo 17 with Amazon Simple Storage Service and automatically routes attachments, product images, and web assets from any Odoo model to your configured S3 bucket.
                     </p>
                     <p style="font-size:17px;color:#475569;margin:0;">
                         Users continue uploading and opening files through Odoo, while administrators gain better control over cloud storage, bucket browsing, synchronization activity, and attachment lifecycle management.
@@ -138,9 +138,9 @@
                     <div style="width:48px;height:48px;border-radius:14px;background-color:#ffedd5;color:#ea580c;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
                         <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
                     </div>
-                    <h3 style="font-size:22px;font-weight:800;color:#9a3412;margin:0 0 12px;">Current Module Scope</h3>
+                    <h3 style="font-size:22px;font-weight:800;color:#9a3412;margin:0 0 12px;">Universal Model Scope</h3>
                     <p style="margin:0;color:#9a3412;">
-                        This version supports attachments linked to <strong>Sale Orders</strong> through the <code>sale.order</code> model.
+                        This version supports attachments, product images, and web assets linked to <strong>any Odoo model</strong> (e.g. <code>product.template</code>, <code>sale.order</code>, <code>account.move</code>, etc.).
                     </p>
                 </div>
             </div>
@@ -152,7 +152,7 @@
         <div class="text-center" style="max-width:760px;margin:0 auto 36px;">
             <span style="display:inline-block;padding:7px 12px;background-color:#ede9fe;color:#7c3aed;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">CORE FEATURES</span>
             <h2 style="font-size:38px;line-height:1.2;font-weight:800;letter-spacing:-1px;margin:0 0 14px;">Everything You Need to Manage Odoo Attachments on S3</h2>
-            <p style="font-size:17px;color:#64748b;margin:0;">A complete cloud-storage workflow for Sale Order attachments inside Odoo.</p>
+            <p style="font-size:17px;color:#64748b;margin:0;">A complete cloud-storage workflow for Odoo model attachments, product images, and web assets.</p>
         </div>
 
         <div class="row g-4">
@@ -212,7 +212,7 @@
                         <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
                     </div>
                     <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Flexible Sync Rules</h3>
-                    <p style="color:#64748b;margin:0;">Configure the storage mode and root-folder prefix used for new Sale Order attachments.</p>
+                    <p style="color:#64748b;margin:0;">Configure the storage mode and root-folder prefix used for different Odoo models dynamically.</p>
                 </div>
             </div>
         </div>
@@ -279,14 +279,14 @@
                 <div style="height:100%;padding:24px;background-color:#1e293b;border:1px solid #334155;border-radius:18px;">
                     <div style="width:42px;height:42px;border-radius:12px;background-color:#4f46e5;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">1</div>
                     <h3 style="font-size:20px;color:#ffffff;font-weight:800;">Upload</h3>
-                    <p style="color:#cbd5e1;margin:0;">A user uploads a file to a Sale Order through Odoo chatter or the attachment interface.</p>
+                    <p style="color:#cbd5e1;margin:0;">A user uploads an attachment or a product image/web asset through any Odoo record interface.</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
                 <div style="height:100%;padding:24px;background-color:#1e293b;border:1px solid #334155;border-radius:18px;">
                     <div style="width:42px;height:42px;border-radius:12px;background-color:#7c3aed;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">2</div>
                     <h3 style="font-size:20px;color:#ffffff;font-weight:800;">Rule Check</h3>
-                    <p style="color:#cbd5e1;margin:0;">The module evaluates the active storage rule configured for <code>sale.order</code>.</p>
+                    <p style="color:#cbd5e1;margin:0;">The module evaluates the active storage rule configured for that specific Odoo model.</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
@@ -385,7 +385,7 @@
         <div style="display:grid;gap:14px;">
             <div style="padding:24px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
                 <h3 style="font-size:19px;font-weight:800;margin:0 0 8px;">Which Odoo records are supported?</h3>
-                <p style="margin:0;color:#64748b;">The current version supports attachments linked to Sale Orders through the <code>sale.order</code> model.</p>
+                <p style="margin:0;color:#64748b;">It supports all records and attachments across Odoo, including product templates, sale orders, invoices, web assets, and custom models.</p>
             </div>
             <div style="padding:24px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
                 <h3 style="font-size:19px;font-weight:800;margin:0 0 8px;">Can files remain in Odoo after being uploaded to S3?</h3>
