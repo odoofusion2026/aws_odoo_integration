@@ -1,37 +1,53 @@
 {
     'name': 'Cloud Storage | AWS S3 Integration',
-    'version': '1.0.0',
+    'version': '19.0.2.0.0',
     'category': 'Extra Tools',
-    'summary': 'Sync Odoo attachments directly to AWS S3 with multi-bucket, file explorer, activity logs, and real-time dashboard.',
+    'summary': (
+        'Universal AWS S3 Storage Backend for Odoo 19. '
+        'ALL files, images, and attachments stored in S3 automatically. '
+        'Zero local disk usage. Full website & eCommerce image offloading.'
+    ),
     'description': """
-AWS S3 Cloud Storage Integration for Odoo
-=========================================
-This module enables seamless storage of Odoo attachments directly in AWS S3.
+AWS S3 Universal Storage Backend for Odoo 19
+============================================
 
-Key Features:
--------------
-* **Auto Attachment Sync**: Automatically sync attachments from configured models.
-* **Three Storage Modes**:
-  - AWS S3 Only (Saves database/filestore space, only stores 0kb URL pointers in Odoo)
-  - Dual Storage (Saves both in Odoo and S3 for compliance)
-  - Odoo Only (Standard Odoo behavior)
-* **Built-in S3 File Explorer**: Browse, upload, download, and delete files on AWS S3 directly within Odoo.
-* **Activity Log Terminal**: Real-time logging of all AWS S3 storage actions.
-* **Monitoring Dashboard**: Stat widgets showcasing key metrics of sync.
-* **Multi-Bucket Support**: Setup and configure multiple buckets.
-* **Bulk Migration Tool**: Easily migrate existing attachments of configured models to AWS S3.
-    """,
+Version 19.0.2.0.0 — Full Odoo Storage Offload Architecture for Odoo 19
+
+What This Module Does
+---------------------
+Makes AWS S3 the universal storage backend for ALL binary data in Odoo 19.
+Every attachment, product image, website CMS image, chatter file, and invoice
+PDF is stored exclusively in AWS S3 — Odoo only stores metadata pointers.
+
+Architecture (v19.0.2.0.0)
+--------------------------
+* Global S3 Storage Engine: Overrides Odoo's officially designed extension
+  points (_file_read, _file_write, _file_delete, _to_http_stream)
+* Zero N+1 Queries:
+  - S3 config cached via ORM cache
+  - boto3 client pooled per OS thread
+  - Pre-signed URLs cached in-process (55-minute TTL)
+  - S3 deletions batched (up to 1000 per API call via delete queue)
+* Transactional Safety & Graceful Fallback
+* Background Migration: Batch migration wizard for existing attachments.
+""",
     'author': 'OdooFusion',
     'website': 'https://odoofusion.net',
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail', 'web'],
+    'external_dependencies': {'python': ['boto3']},
     'data': [
         'security/ir.model.access.csv',
         'data/aws_s3_data.xml',
+        'data/aws_s3_cron.xml',
         'views/aws_s3_bucket_views.xml',
         'views/aws_s3_attachment_rule_views.xml',
+        'views/aws_s3_delete_queue_views.xml',
         'views/aws_s3_log_views.xml',
         'views/aws_s3_dashboard_views.xml',
         'views/aws_s3_file_explorer_views.xml',
+        'views/aws_s3_config_views.xml',
+        'views/aws_s3_migration_views.xml',
+        'views/ir_attachment_views.xml',
         'views/menuitems.xml',
     ],
     'installable': True,
@@ -43,4 +59,3 @@ Key Features:
         'static/description/banner.png'
     ],
 }
-

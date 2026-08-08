@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_aws_s3_delete_queue_tree" model="ir.ui.view">
+        <field name="name">aws.s3.delete.queue.list</field>
+        <field name="model">aws.s3.delete.queue</field>
+        <field name="arch" type="xml">
+            <list string="S3 Deletion Queue"
+                  decoration-success="state == 'done'"
+                  decoration-danger="state == 'failed'"
+                  decoration-warning="state == 'pending'">
+                <field name="create_date" string="Queued At"/>
+                <field name="s3_key"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-warning="state == 'pending'"
+                       decoration-danger="state == 'failed'"/>
+                <field name="retry_count"/>
+                <field name="error_msg" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_aws_s3_delete_queue_search" model="ir.ui.view">
+        <field name="name">aws.s3.delete.queue.search</field>
+        <field name="model">aws.s3.delete.queue</field>
+        <field name="arch" type="xml">
+            <search string="Search Delete Queue">
+                <field name="s3_key"/>
+                <field name="state"/>
+                <filter name="pending" string="Pending" domain="[('state','=','pending')]"/>
+                <filter name="failed" string="Failed" domain="[('state','=','failed')]"/>
+                <filter name="done" string="Done" domain="[('state','=','done')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_aws_s3_delete_queue" model="ir.actions.act_window">
+        <field name="name">S3 Deletion Queue</field>
+        <field name="res_model">aws.s3.delete.queue</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_pending': 1}</field>
+    </record>
+
+</odoo>

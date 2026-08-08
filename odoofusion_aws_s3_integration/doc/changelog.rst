@@ -1,77 +1,34 @@
 Changelog
 =========
 
-Date: 2026-06-25 (Thursday) at 12:15 AM
+Date: 2026-08-08 (Saturday) at 10:00 PM
 Changes:
-- Created Odoo 18 AWS S3 Integration module with full manifest settings (odoofusion_aws_s3_integration/__manifest__.py)
-- Implemented models for S3 bucket connection, configuration rules, activity log terminal, visual dashboard, and S3 file explorer (odoofusion_aws_s3_integration/models/)
-- Overrode ir.attachment model to handle auto attachment sync and storage logic (odoofusion_aws_s3_integration/models/ir_attachment.py)
-- Configured security access settings (odoofusion_aws_s3_integration/security/ir.model.access.csv)
-- Created views for dashboard, file explorer, configurations, and logs (odoofusion_aws_s3_integration/views/)
+- Converted module architecture and manifests to Odoo 19 (version 19.0.2.0.0) with author Metamorphosis, Joyanto (odoofusion_aws_s3_integration/__manifest__.py)
+- Ported models for global S3 config, ir.attachment storage engine hooks (_file_write, _file_read, _file_delete, _to_http_stream), transactional deletion queue, background migration wizard, dashboard, and S3 file explorer to Odoo 19 ORM standards (odoofusion_aws_s3_integration/models/)
+- Created XML views enforcing <list> tag for list views, view_mode="list,form", attachment status banners, and navigation menus for Odoo 19 (odoofusion_aws_s3_integration/views/)
+- Configured security access control lists and scheduled actions (odoofusion_aws_s3_integration/security/ir.model.access.csv, odoofusion_aws_s3_integration/data/)
 
-Date: 2026-06-25 (Thursday) at 11:54 AM
+Date: 2026-08-08 (Saturday) at 10:19 PM
 Changes:
-- Fixed ValueError: added ondelete='cascade' to model_id Many2one(ir.model) in AwsS3AttachmentRule — ir.model comodel does not support restrict mode (aws_s3_attachment_rule.py)
-- Added missing action_open_dashboard() @api.model method to AwsS3Dashboard referenced by ir.actions.server in XML (aws_s3_dashboard.py)
-- Rewrote ir_attachment.py: fixed @api.model _file_read accessing instance fields (is_s3_stored) on model level, removed unused new_vals_list in create(), fixed dual-storage self-healing fallback to search by store_fname not self, added _get_active_s3_rule() helper (ir_attachment.py)
+- Fixed ParseError on module installation: reordered data files list in manifest so aws_s3_attachment_rule_views.xml loads before aws_s3_config_views.xml, resolving missing External ID action_aws_s3_attachment_rule (odoofusion_aws_s3_integration/__manifest__.py)
 
-Date: 2026-07-14 (Tuesday) at 12:24 AM
+Date: 2026-08-08 (Saturday) at 10:23 PM
 Changes:
-- Generated comprehensive PDF technical reference and user guide manual (doc/aws_s3_integration_guide.pdf)
+- Fixed View ValidationError: added <field name="is_s3_stored" invisible="1"/> inside ir.attachment form view xpath before invisible modifier usage (views/ir_attachment_views.xml)
 
-Date: 2026-07-16 (Thursday) at 11:08 PM
+Date: 2026-08-08 (Saturday) at 10:31 PM
 Changes:
-- Created AWS S3 bucket credentials and sale order sync rule data record (data/aws_s3_data.xml)
-- Declared dependency on the sale module and registered the new data file (__manifest__.py)
-- Restricted attachment sync rules configuration to sale.order model (models/aws_s3_attachment_rule.py)
-- Restricted ir.attachment active rule lookup to sale.order model (models/ir_attachment.py)
+- Fixed ModuleNotFoundError on module installation: removed top-level unused import boto3 from models/aws_s3_file_explorer.py and declared external_dependencies python boto3 in __manifest__.py (models/aws_s3_file_explorer.py, __manifest__.py)
 
-Date: 2026-07-16 (Thursday) at 11:46 PM
+Date: 2026-08-08 (Saturday) at 10:35 PM
 Changes:
-- Upgraded dashboard layout and logic to feature dynamic metrics, recent uploads table, live sync efficiency gauge, and direct navigational shortcuts (models/aws_s3_dashboard.py)
-- Streamlined dashboard form view by removing redundant bottom buttons (views/aws_s3_dashboard_views.xml)
+- Fixed AttributeError on module installation: replaced self.env['ir.attachment'].clear_caches() with self.env.registry.clear_cache() and updated create() method signatures to @api.model_create_multi (models/aws_s3_attachment_rule.py, models/aws_s3_config.py)
 
-Date: 2026-07-16 (Thursday) at 11:51 PM
+Date: 2026-08-08 (Saturday) at 10:44 PM
 Changes:
-- Refactored dashboard HTML to utilize native Bootstrap 5 classes, overcoming Odoo's HTML sanitizer stylesheet stripping (models/aws_s3_dashboard.py)
+- Fixed Invalid view aws.s3.log.search definition ParseError: replaced legacy expand="0" and string="Group By" attributes on search view group element with name="group_by" per Odoo 19 RNG schema specifications (views/aws_s3_log_views.xml)
 
-Date: 2026-07-16 (Thursday) at 11:54 PM
-Changes:
-- Implemented high-contrast color scheme and styled action buttons inline for enhanced visibility (models/aws_s3_dashboard.py)
 
-Date: 2026-07-16 (Thursday) at 11:57 PM
-Changes:
-- Replaced S3 Key column text-truncation with word-break wrapping for complete path readability (models/aws_s3_dashboard.py)
 
-Date: 2026-07-16 (Thursday) at 11:59 PM
-Changes:
-- Changed S3 Key text color to high-contrast slate color for readability in light mode (models/aws_s3_dashboard.py)
 
-Date: 2026-07-17 (Friday) at 12:05 AM
-Changes:
-- Updated module author to 'OdooFusion' and added website link (__manifest__.py)
-- Generated and set a new world-class flat vector app icon (static/description/icon.png)
 
-Date: 2026-07-17 (Friday) at 12:10 AM
-Changes:
-- Created world-class Odoo App Store documentation (static/description/index.html)
-
-Date: 2026-07-17 (Friday) at 12:15 AM
-Changes:
-- Replaced light-grey text classes in App Store description with high-contrast colors (#334155 / #475569) (static/description/index.html)
-
-Date: 2026-07-17 (Friday) at 12:18 AM
-Changes:
-- Fixed datetime timezone-aware exception by converting LastModified from boto3 to timezone-naive (models/aws_s3_file_explorer.py)
-
-Date: 2026-07-17 (Friday) at 12:23 AM
-Changes:
-- Resolved 'Please save your changes first' wizard warning by persisting transient explorer records on load (models/aws_s3_file_explorer.py, views/aws_s3_file_explorer_views.xml, views/menuitems.xml, models/aws_s3_dashboard.py)
-
-Date: 2026-07-17 (Friday) at 12:31 AM
-Changes:
-- Removed model-level sale.order restriction to allow S3 sync configurations for all persistent models (models/aws_s3_attachment_rule.py, models/ir_attachment.py)
-
-Date: 2026-07-17 (Friday) at 12:34 AM
-Changes:
-- Removed hard dependency on sale module from manifest and switched default rule to res.partner (__manifest__.py, data/aws_s3_data.xml)

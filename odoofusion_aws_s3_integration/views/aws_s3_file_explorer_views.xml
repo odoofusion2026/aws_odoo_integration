@@ -57,13 +57,5 @@
         <field name="res_model">aws.s3.file.explorer</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                AWS S3 File Explorer.
-            </p>
-            <p>
-                Browse directories, open subfolders, download documents, or remove objects on your AWS S3 buckets in real-time.
-            </p>
-        </field>
     </record>
 </odoo>

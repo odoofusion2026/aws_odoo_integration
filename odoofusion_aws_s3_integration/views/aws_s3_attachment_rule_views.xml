@@ -20,9 +20,18 @@
         <field name="arch" type="xml">
             <form string="AWS S3 Attachment Sync Rule">
                 <header>
-                    <button name="action_migrate_to_s3" string="Bulk Migrate Attachments to S3" type="object" class="oe_highlight" confirm="This will upload all existing attachments of this model to AWS S3 and clean up local Odoo files if using S3 Only mode. Are you sure you want to proceed?"/>
+                    <button name="action_migrate_to_s3"
+                            string="Bulk Migrate Attachments to S3"
+                            type="object"
+                            class="oe_highlight"
+                            confirm="This will upload all existing attachments of this model to AWS S3. Are you sure?"/>
                 </header>
                 <sheet>
+                    <div class="alert alert-warning" role="alert">
+                        <i class="fa fa-info-circle" title="Info"/>
+                        <strong> Note:</strong> This rule only takes effect when Routing Mode = Rule-Based.
+                    </div>
+
                     <div class="oe_title">
                         <h1>
                             <field name="name" readonly="1"/>
@@ -31,14 +40,30 @@
                     <group>
                         <group string="Model Storage Settings">
                             <field name="model_id" options="{'no_create': True, 'no_open': True}"/>
-                            <field name="storage_mode"/>
+                            <field name="storage_mode" widget="radio"/>
                         </group>
                         <group string="S3 Folder Routing &amp; Bucket">
-                            <field name="root_folder" placeholder="e.g. Sales/"/>
+                            <field name="root_folder" placeholder="e.g. Website/"/>
                             <field name="bucket_id" options="{'no_create': True}"/>
                             <field name="is_active"/>
                         </group>
                     </group>
+
+                    <div class="alert alert-success" role="alert"
+                         invisible="storage_mode != 's3_only'">
+                        <i class="fa fa-cloud-upload" title="S3 Only"/>
+                        <strong> S3 Only:</strong> New attachments go exclusively to AWS S3.
+                    </div>
+                    <div class="alert alert-info" role="alert"
+                         invisible="storage_mode != 'dual'">
+                        <i class="fa fa-clone" title="Dual"/>
+                        <strong> Dual Storage:</strong> Attachments saved to both S3 and Odoo filestore.
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="storage_mode != 'odoo_only'">
+                        <i class="fa fa-hdd-o" title="Odoo Only"/>
+                        <strong> Odoo Only:</strong> Attachments kept on local Odoo filestore.
+                    </div>
                 </sheet>
             </form>
         </field>
@@ -51,9 +76,6 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create a model sync rule.
-            </p>
-            <p>
-                Configure which Odoo models should synchronize their attachments to S3 and define the storage mode (S3 Only or Dual Storage).
             </p>
         </field>
     </record>

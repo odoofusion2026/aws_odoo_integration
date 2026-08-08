@@ -52,7 +52,7 @@
                 <field name="res_model"/>
                 <filter string="Success" name="success" domain="[('status', '=', 'success')]"/>
                 <filter string="Failed" name="failed" domain="[('status', '=', 'failed')]"/>
-                <group expand="0" string="Group By">
+                <group name="group_by">
                     <filter string="Operation" name="group_by_name" context="{'group_by': 'name'}"/>
                     <filter string="Status" name="group_by_status" context="{'group_by': 'status'}"/>
                     <filter string="Odoo Model" name="group_by_model" context="{'group_by': 'res_model'}"/>
@@ -69,9 +69,6 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 AWS S3 Sync Operations Terminal.
-            </p>
-            <p>
-                Every upload, read, delete, connection test, or migration is logged here for diagnostic and auditing purposes.
             </p>
         </field>
     </record>

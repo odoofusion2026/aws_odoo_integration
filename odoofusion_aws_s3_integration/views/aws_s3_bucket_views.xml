@@ -54,9 +54,6 @@
             <p class="o_view_nocontent_smiling_face">
                 Configure your AWS S3 bucket connection.
             </p>
-            <p>
-                Ensure that your AWS IAM credentials have sufficient permissions to read/write/delete objects in the S3 bucket.
-            </p>
         </field>
     </record>
 </odoo>

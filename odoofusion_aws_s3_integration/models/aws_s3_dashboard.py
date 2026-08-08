@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+# Author: Metamorphosis, Joyanto
+
 from odoo import models, fields, api
+
 
 class AwsS3Dashboard(models.TransientModel):
     _name = 'aws.s3.dashboard'
@@ -27,11 +30,9 @@ class AwsS3Dashboard(models.TransientModel):
         for dash in self:
             dash._compute_metrics()
             
-            # Calculate Success Rate
             total_syncs = dash.success_sync_count + dash.failed_sync_count
             success_rate = round((dash.success_sync_count / total_syncs) * 100, 1) if total_syncs > 0 else 100.0
             
-            # Fetch recent logs
             recent_logs = self.env['aws.s3.log'].sudo().search([], limit=5)
             logs_html = ""
             if recent_logs:
@@ -53,7 +54,6 @@ class AwsS3Dashboard(models.TransientModel):
                     badge_style = "background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0;" if log.status == 'success' else "background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca;"
                     status_text = "Success" if log.status == 'success' else "Failed"
                     
-                    # Record Link
                     if log.res_model and log.res_id:
                         record_link = f'<a href="/web#model={log.res_model}&amp;id={log.res_id}&amp;view_type=form" class="fw-bold text-decoration-none text-primary" style="color: #0284c7 !important;" title="Click to view Odoo record"><i class="fa fa-external-link me-1"></i>{log.res_model} ({log.res_id})</a>'
                     else:
@@ -80,7 +80,6 @@ class AwsS3Dashboard(models.TransientModel):
                 </tr>
                 """
                 
-            # Fetch S3 Buckets
             buckets = self.env['aws.s3.bucket'].sudo().search([])
             buckets_html = ""
             if buckets:
@@ -116,9 +115,8 @@ class AwsS3Dashboard(models.TransientModel):
             html = f"""
             <div class="container-fluid p-0" style="font-family: 'Outfit', 'Segoe UI', Roboto, sans-serif;">
                 
-                <!-- Header -->
                 <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom flex-wrap gap-3">
-                    <h4 class="mb-0 fw-bold" style="color: #2c3e50;"><i class="fa fa-cloud text-primary me-2"></i>AWS S3 Sync Monitor</h4>
+                    <h4 class="mb-0 fw-bold" style="color: #2c3e50;"><i class="fa fa-cloud text-primary me-2"></i>AWS S3 Sync Monitor (Odoo 19)</h4>
                     <div class="d-flex gap-2 flex-wrap">
                         <a href="/web#action=odoofusion_aws_s3_integration.action_aws_s3_file_explorer_server" class="btn btn-sm fw-bold shadow-sm" style="background-color: #4f46e5; color: #ffffff; border: 1px solid #4f46e5; padding: 6px 12px; border-radius: 6px;"><i class="fa fa-folder-open me-1"></i> S3 File Explorer</a>
                         <a href="/web#action=odoofusion_aws_s3_integration.action_aws_s3_bucket" class="btn btn-sm fw-bold shadow-sm" style="background-color: #ffffff; color: #334155; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px;"><i class="fa fa-database me-1"></i> Setup Buckets</a>
@@ -127,11 +125,9 @@ class AwsS3Dashboard(models.TransientModel):
                     </div>
                 </div>
 
-                <!-- KPI Cards Row -->
                 <div class="row g-3 mb-4">
-                    <!-- Buckets Card -->
                     <div class="col-12 col-sm-6 col-md-3">
-                        <div class="card h-100 border shadow-sm position-relative" style="background-color: #f5f3ff; border-color: #ddd6fe !important; border-radius: 12px; transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div class="card h-100 border shadow-sm position-relative" style="background-color: #f5f3ff; border-color: #ddd6fe !important; border-radius: 12px;">
                             <div class="card-body d-flex align-items-center">
                                 <div class="rounded-3 p-3 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background-color: #ddd6fe; color: #6d28d9;">
                                     <i class="fa fa-database fa-lg"></i>
@@ -146,9 +142,8 @@ class AwsS3Dashboard(models.TransientModel):
                         </div>
                     </div>
 
-                    <!-- Active Rules Card -->
                     <div class="col-12 col-sm-6 col-md-3">
-                        <div class="card h-100 border shadow-sm position-relative" style="background-color: #ecfeff; border-color: #a5f3fc !important; border-radius: 12px; transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div class="card h-100 border shadow-sm position-relative" style="background-color: #ecfeff; border-color: #a5f3fc !important; border-radius: 12px;">
                             <div class="card-body d-flex align-items-center">
                                 <div class="rounded-3 p-3 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background-color: #a5f3fc; color: #0891b2;">
                                     <i class="fa fa-filter fa-lg"></i>
@@ -163,9 +158,8 @@ class AwsS3Dashboard(models.TransientModel):
                         </div>
                     </div>
 
-                    <!-- Success Syncs Card -->
                     <div class="col-12 col-sm-6 col-md-3">
-                        <div class="card h-100 border shadow-sm position-relative" style="background-color: #f0fdf4; border-color: #bbf7d0 !important; border-radius: 12px; transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div class="card h-100 border shadow-sm position-relative" style="background-color: #f0fdf4; border-color: #bbf7d0 !important; border-radius: 12px;">
                             <div class="card-body d-flex align-items-center">
                                 <div class="rounded-3 p-3 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background-color: #bbf7d0; color: #15803d;">
                                     <i class="fa fa-check-circle fa-lg"></i>
@@ -180,9 +174,8 @@ class AwsS3Dashboard(models.TransientModel):
                         </div>
                     </div>
 
-                    <!-- Sync Failures Card -->
                     <div class="col-12 col-sm-6 col-md-3">
-                        <div class="card h-100 border shadow-sm position-relative" style="background-color: #fef2f2; border-color: #fecaca !important; border-radius: 12px; transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div class="card h-100 border shadow-sm position-relative" style="background-color: #fef2f2; border-color: #fecaca !important; border-radius: 12px;">
                             <div class="card-body d-flex align-items-center">
                                 <div class="rounded-3 p-3 me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background-color: #fecaca; color: #b91c1c;">
                                     <i class="fa fa-exclamation-triangle fa-lg"></i>
@@ -198,9 +191,7 @@ class AwsS3Dashboard(models.TransientModel):
                     </div>
                 </div>
 
-                <!-- Main Section -->
                 <div class="row g-4">
-                    <!-- Left Column: Activity Logs -->
                     <div class="col-12 col-lg-8">
                         <div class="card border shadow-sm h-100" style="border-radius: 12px; border-color: #e2e8f0 !important;">
                             <div class="card-header bg-white border-bottom-0 pt-3 px-3 pb-0 d-flex justify-content-between align-items-center">
@@ -228,10 +219,8 @@ class AwsS3Dashboard(models.TransientModel):
                         </div>
                     </div>
 
-                    <!-- Right Column: Stats & Buckets -->
                     <div class="col-12 col-lg-4">
                         <div class="d-flex flex-column gap-4">
-                            <!-- Efficiency Widget -->
                             <div class="card border shadow-sm text-center" style="border-radius: 12px; background-color: #fff; border-color: #e2e8f0 !important;">
                                 <div class="card-body py-4">
                                     <h6 class="text-uppercase fw-bold mb-3" style="font-size: 11px; letter-spacing: 0.5px; color: #b45309;"><i class="fa fa-bolt text-warning me-1"></i>Sync Efficiency</h6>
@@ -246,7 +235,6 @@ class AwsS3Dashboard(models.TransientModel):
                                 </div>
                             </div>
 
-                            <!-- Buckets List Widget -->
                             <div class="card border shadow-sm" style="border-radius: 12px; background-color: #fff; border-color: #e2e8f0 !important;">
                                 <div class="card-header bg-white border-bottom-0 pt-3 px-3 pb-0 d-flex justify-content-between align-items-center">
                                     <h6 class="card-title mb-0 fw-bold" style="font-size: 14px; color: #2c3e50;"><i class="fa fa-hdd-o text-primary me-2"></i>Active Buckets</h6>
@@ -283,7 +271,6 @@ class AwsS3Dashboard(models.TransientModel):
 
     @api.model
     def action_open_dashboard(self):
-        """Server action method: create a fresh transient record and open it."""
         record = self.create({})
         return {
             'name': 'AWS S3 Dashboard',
