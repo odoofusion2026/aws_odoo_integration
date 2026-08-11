@@ -1,33 +1,60 @@
-<div class="container" style="max-width:1200px;margin:0 auto;padding:24px 15px;font-family:Inter,Arial,Helvetica,sans-serif;color:#0f172a;line-height:1.65;background-color:#f8fafc;">
+
+<style>
+.ofs-wrap { box-sizing:border-box; width:100%; max-width:1200px; margin:0 auto; padding:24px 15px; font-family:Inter,Arial,Helvetica,sans-serif; color:#0f172a; line-height:1.65; background-color:#f8fafc; }
+.ofs-wrap *, .ofs-wrap *:before, .ofs-wrap *:after { box-sizing:border-box; }
+.ofs-flex { display:flex; flex-wrap:wrap; align-items:center; }
+.ofs-flex > * { margin-right:10px; margin-bottom:10px; }
+.ofs-flex > *:last-child { margin-right:0; }
+.ofs-flex-center { display:flex; flex-wrap:wrap; align-items:center; }
+.ofs-flex-center > * { margin-right:14px; margin-bottom:10px; }
+.ofs-flex-center > *:last-child { margin-right:0; }
+.ofs-check-grid { display:grid; grid-template-columns:1fr 1fr; }
+.ofs-check-grid > div { margin:0 7px 14px 0; }
+.ofs-section-title { font-size:38px; line-height:1.2; }
+.ofs-h2 { font-size:36px; line-height:1.2; }
+.ofs-h1 { font-size:48px; line-height:1.15; }
+.ofs-hero { overflow:hidden; padding:70px 40px; border-radius:28px; margin-bottom:42px; }
+@media (max-width: 767px) {
+  .ofs-wrap { padding:12px 10px; }
+  .ofs-hero { padding:38px 20px !important; border-radius:20px !important; }
+  .ofs-h1 { font-size:34px !important; letter-spacing:-.8px !important; }
+  .ofs-h2, .ofs-section-title { font-size:28px !important; }
+  .ofs-check-grid { grid-template-columns:1fr; }
+  .ofs-check-grid > div { margin-right:0; }
+  .ofs-wrap p { max-width:100% !important; }
+}
+</style>
+
+<div class="container ofs-wrap">
 
     <!-- HERO -->
-    <section style="overflow:hidden;padding:70px 40px;border-radius:28px;background-color:#1e1b4b;margin-bottom:42px;border:1px solid #312e81;">
+    <section class="ofs-hero" style="background-color:#1e1b4b;border:1px solid #312e81;">
         <div class="row align-items-center g-5">
             <div class="col-12 col-lg-7">
                 <div style="margin-bottom:24px;">
                     <img src="logo.png" alt="OdooFusion Logo" height="35" style="max-height:35px;"/>
                 </div>
-                <div style="display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid #4338ca;background-color:#2e2a85;border-radius:999px;color:#e0e7ff;font-size:13px;font-weight:700;margin-bottom:20px;">
+                <div style="display:inline-flex;align-items:center;padding:7px 13px;border:1px solid #4338ca;background-color:#2e2a85;border-radius:999px;color:#e0e7ff;font-size:13px;font-weight:700;margin-bottom:20px;">
                     <i class="fa fa-cloud" aria-hidden="true"></i>
                     Odoo 18 • Amazon S3 • Cloud Attachment Storage
                 </div>
 
-                <h1 style="font-size:48px;line-height:1.15;color:#ffffff;font-weight:800;letter-spacing:-1.5px;margin:0 0 20px;">
-                    Odoo AWS S3 Integration for Smarter Attachment Storage
+                <h1 class="ofs-h1" style="color:#ffffff;font-weight:800;letter-spacing:-1.5px;margin:0 0 20px;">
+                    Odoo AWS S3 Integration for Files, Media & Website Images
                 </h1>
 
                 <p style="font-size:20px;color:#dbeafe;max-width:760px;margin:0 0 28px;">
-                    Store, browse, monitor, and manage attachments and images across all Odoo models (including Products, Sales, Invoices, Web Assets, and custom models) on Amazon S3 without changing the way your team works inside Odoo.
+                    Offload Odoo attachments, documents, product images, and website media to Amazon S3. Automatically rewrite supported media URLs so your Odoo website can deliver images from your S3 bucket while your team keeps working normally inside Odoo.
                 </p>
 
-                <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px;">
+                <div class="ofs-flex" style="margin-bottom:30px;">
                     <span style="padding:9px 14px;background-color:#ffffff;color:#312e81;border-radius:10px;font-size:14px;font-weight:700;">Odoo 18 Ready</span>
                     <span style="padding:9px 14px;background-color:#2e2a85;color:#ffffff;border:1px solid #4338ca;border-radius:10px;font-size:14px;font-weight:700;">AWS S3 Only</span>
                     <span style="padding:9px 14px;background-color:#2e2a85;color:#ffffff;border:1px solid #4338ca;border-radius:10px;font-size:14px;font-weight:700;">Dual Storage</span>
                     <span style="padding:9px 14px;background-color:#2e2a85;color:#ffffff;border:1px solid #4338ca;border-radius:10px;font-size:14px;font-weight:700;">Built-in File Explorer</span>
                 </div>
 
-                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+                <div class="ofs-flex-center">
                     <a href="#features" style="display:inline-block;padding:13px 22px;background-color:#ffffff;color:#312e81;text-decoration:none;border-radius:12px;font-weight:800;">Explore Features</a>
                     <span style="color:#c7d2fe;font-size:14px;">Developed by OdooFusion</span>
                 </div>
@@ -37,7 +64,7 @@
                 <div style="background-color:#2e2a85;border:1px solid #4338ca;padding:20px;border-radius:24px;">
                     <div style="background-color:#ffffff;border-radius:18px;padding:20px;">
                         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
-                            <div style="display:flex;align-items:center;gap:10px;">
+                            <div class="ofs-flex-center" style="flex-wrap:nowrap;">
                                 <img src="icon.png" alt="Odoo AWS S3 Integration module by OdooFusion" width="52" height="52" style="border-radius:14px;">
                                 <div>
                                     <div style="font-weight:800;color:#111827;">AWS S3 Dashboard</div>
@@ -73,7 +100,7 @@
                             </div>
                         </div>
 
-                        <div style="margin-top:16px;padding:14px;background-color:#f8fafc;border-radius:14px;display:flex;align-items:center;gap:12px;">
+                        <div style="margin-top:16px;padding:14px;background-color:#f8fafc;border-radius:14px;display:flex;align-items:center;">
                             <div style="width:36px;height:36px;border-radius:10px;background-color:#ede9fe;display:flex;align-items:center;justify-content:center;color:#7c3aed;">
                                 <i class="fa fa-check" aria-hidden="true"></i>
                             </div>
@@ -93,20 +120,20 @@
         <div class="row g-3 text-center">
             <div class="col-6 col-md-3">
                 <div style="padding:22px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
-                    <div style="font-size:30px;font-weight:800;color:#4f46e5;">3</div>
-                    <div style="font-size:13px;color:#64748b;font-weight:700;">Storage Modes</div>
+                    <div style="font-size:30px;font-weight:800;color:#4f46e5;">S3</div>
+                    <div style="font-size:13px;color:#64748b;font-weight:700;">AWS Cloud Storage</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div style="padding:22px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
-                    <div style="font-size:30px;font-weight:800;color:#0ea5e9;">24/7</div>
-                    <div style="font-size:13px;color:#64748b;font-weight:700;">File Availability</div>
+                    <div style="font-size:30px;font-weight:800;color:#0ea5e9;">URL</div>
+                    <div style="font-size:13px;color:#64748b;font-weight:700;">Automatic Rewrite</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div style="padding:22px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
-                    <div style="font-size:30px;font-weight:800;color:#10b981;">Live</div>
-                    <div style="font-size:13px;color:#64748b;font-weight:700;">Sync Monitoring</div>
+                    <div style="font-size:30px;font-weight:800;color:#10b981;">Web</div>
+                    <div style="font-size:13px;color:#64748b;font-weight:700;">Website Media</div>
                 </div>
             </div>
             <div class="col-6 col-md-3">
@@ -150,9 +177,9 @@
     <!-- FEATURE GRID -->
     <section id="features" style="margin-bottom:58px;">
         <div class="text-center" style="max-width:760px;margin:0 auto 36px;">
-            <span style="display:inline-block;padding:7px 12px;background-color:#ede9fe;color:#7c3aed;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">CORE FEATURES</span>
-            <h2 style="font-size:38px;line-height:1.2;font-weight:800;letter-spacing:-1px;margin:0 0 14px;">Everything You Need to Manage Odoo Attachments on S3</h2>
-            <p style="font-size:17px;color:#64748b;margin:0;">A complete cloud-storage workflow for Odoo model attachments, product images, and web assets.</p>
+            <span style="display:inline-block;padding:7px 12px;background-color:#ede9fe;color:#7c3aed;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">AWS S3 FEATURES</span>
+            <h2 class="ofs-section-title" style="font-weight:800;letter-spacing:-1px;margin:0 0 14px;">Store Odoo Files and Website Media in Amazon S3</h2>
+            <p style="font-size:17px;color:#64748b;margin:0;">A focused AWS S3 storage workflow for Odoo attachments, product images, documents, and website media.</p>
         </div>
 
         <div class="row g-4">
@@ -161,58 +188,58 @@
                     <div style="width:52px;height:52px;border-radius:15px;background-color:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
                         <i class="fa fa-cloud-upload fa-lg" aria-hidden="true"></i>
                     </div>
-                    <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">AWS S3 Only Mode</h3>
-                    <p style="color:#64748b;margin:0;">Store the attachment on Amazon S3, remove the local Odoo copy, and retain a lightweight reference for retrieval.</p>
+                    <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Offload Odoo Files to AWS S3</h3>
+                    <p style="color:#64748b;margin:0;">Store supported Odoo attachments and media in your configured Amazon S3 bucket to reduce dependence on local server storage.</p>
                 </div>
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
                 <div style="height:100%;padding:28px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
                     <div style="width:52px;height:52px;border-radius:15px;background-color:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
-                        <i class="fa fa-files-o fa-lg" aria-hidden="true"></i>
+                        <i class="fa fa-picture-o fa-lg" aria-hidden="true"></i>
                     </div>
-                    <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Dual Storage Mode</h3>
-                    <p style="color:#64748b;margin:0;">Keep a copy in both Odoo and Amazon S3 for redundancy, backup, or internal compliance requirements.</p>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <div style="height:100%;padding:28px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
-                    <div style="width:52px;height:52px;border-radius:15px;background-color:#f1f5f9;color:#475569;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
-                        <i class="fa fa-hdd-o fa-lg" aria-hidden="true"></i>
-                    </div>
-                    <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Odoo Only Mode</h3>
-                    <p style="color:#64748b;margin:0;">Continue using the standard Odoo attachment-storage workflow when cloud offloading is not required.</p>
+                    <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Odoo Website Image Storage</h3>
+                    <p style="color:#64748b;margin:0;">Images added while creating an Odoo website can be stored in Amazon S3 instead of remaining only on the Odoo server.</p>
                 </div>
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
                 <div style="height:100%;padding:28px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
                     <div style="width:52px;height:52px;border-radius:15px;background-color:#faf5ff;color:#7c3aed;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
-                        <i class="fa fa-folder-open-o fa-lg" aria-hidden="true"></i>
+                        <i class="fa fa-link fa-lg" aria-hidden="true"></i>
                     </div>
-                    <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">S3 File Explorer</h3>
-                    <p style="color:#64748b;margin:0;">Browse folders, search files, view metadata, download objects, and remove files from the Odoo backend.</p>
+                    <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Automatic Media URL Rewrite</h3>
+                    <p style="color:#64748b;margin:0;">Automatically replace supported local media references with the corresponding Amazon S3 URL so your website can request the cloud-hosted file.</p>
                 </div>
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
                 <div style="height:100%;padding:28px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
                     <div style="width:52px;height:52px;border-radius:15px;background-color:#ecfeff;color:#0891b2;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
-                        <i class="fa fa-tachometer fa-lg" aria-hidden="true"></i>
+                        <i class="fa fa-globe fa-lg" aria-hidden="true"></i>
                     </div>
-                    <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Sync Monitor</h3>
-                    <p style="color:#64748b;margin:0;">Track connection status, successful uploads, failures, recent activity, and related Odoo source records.</p>
+                    <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">S3 Delivery URLs</h3>
+                    <p style="color:#64748b;margin:0;">Serve supported offloaded website media from its Amazon S3 location while keeping the content workflow inside Odoo.</p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div style="height:100%;padding:28px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
+                    <div style="width:52px;height:52px;border-radius:15px;background-color:#f1f5f9;color:#475569;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+                        <i class="fa fa-folder-open-o fa-lg" aria-hidden="true"></i>
+                    </div>
+                    <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">S3 File Explorer</h3>
+                    <p style="color:#64748b;margin:0;">Browse configured Amazon S3 folders, search files, view object information, and manage stored objects from the Odoo backend.</p>
                 </div>
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
                 <div style="height:100%;padding:28px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
                     <div style="width:52px;height:52px;border-radius:15px;background-color:#fff7ed;color:#ea580c;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
-                        <i class="fa fa-cogs fa-lg" aria-hidden="true"></i>
+                        <i class="fa fa-tachometer fa-lg" aria-hidden="true"></i>
                     </div>
-                    <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Flexible Sync Rules</h3>
-                    <p style="color:#64748b;margin:0;">Configure the storage mode and root-folder prefix used for different Odoo models dynamically.</p>
+                    <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">Sync & Storage Monitoring</h3>
+                    <p style="color:#64748b;margin:0;">Monitor S3 connection status and storage activity so administrators can keep track of the cloud-storage workflow.</p>
                 </div>
             </div>
         </div>
@@ -222,45 +249,40 @@
     <section style="margin-bottom:58px;">
         <div class="row g-4 align-items-center">
             <div class="col-12 col-lg-6">
-                <div style="padding:36px;background-color:#f5f7ff;border:1px solid #c7d2fe;border-radius:26px;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;">
-                        <div>
-                            <div style="font-size:12px;font-weight:800;color:#6366f1;">S3 FILE EXPLORER</div>
-                            <div style="font-size:22px;font-weight:800;color:#111827;">Bucket: company-documents</div>
-                        </div>
-                        <div style="width:44px;height:44px;background-color:#4f46e5;color:#ffffff;border-radius:13px;display:flex;align-items:center;justify-content:center;">
-                            <i class="fa fa-folder-open" aria-hidden="true"></i>
-                        </div>
-                    </div>
+                <div style="padding:30px;background-color:#f5f7ff;border:1px solid #c7d2fe;border-radius:26px;">
+                    <div style="background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;padding:20px;">
+                        <div style="font-size:12px;font-weight:800;color:#6366f1;margin-bottom:8px;">ODOO WEBSITE</div>
+                        <div style="font-size:22px;font-weight:800;color:#111827;margin-bottom:18px;">Image Delivery Flow</div>
 
-                    <div style="background-color:#ffffff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;">
-                        <div style="padding:13px 16px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between;font-size:12px;color:#64748b;font-weight:700;">
-                            <span>NAME</span><span>SIZE</span>
+                        <div style="padding:16px;border:1px solid #e2e8f0;border-radius:14px;margin-bottom:12px;">
+                            <div style="font-size:12px;color:#64748b;margin-bottom:6px;">LOCAL ODOO MEDIA URL</div>
+                            <div style="font-size:13px;color:#334155;overflow-wrap:anywhere;">/web/image/website-image.jpg</div>
                         </div>
-                        <div style="padding:15px 16px;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center;">
-                            <span><i class="fa fa-folder me-2" style="color:#f59e0b;"></i>Sales</span><span style="font-size:12px;color:#94a3b8;">Folder</span>
+
+                        <div style="text-align:center;color:#4f46e5;font-size:20px;margin:6px 0 12px;">
+                            <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
                         </div>
-                        <div style="padding:15px 16px;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center;">
-                            <span><i class="fa fa-file-pdf-o me-2" style="color:#ef4444;"></i>SO-1048.pdf</span><span style="font-size:12px;color:#94a3b8;">2.8 MB</span>
-                        </div>
-                        <div style="padding:15px 16px;display:flex;justify-content:space-between;align-items:center;">
-                            <span><i class="fa fa-file-image-o me-2" style="color:#8b5cf6;"></i>product-image.png</span><span style="font-size:12px;color:#94a3b8;">840 KB</span>
+
+                        <div style="padding:16px;background-color:#eef2ff;border:1px solid #c7d2fe;border-radius:14px;">
+                            <div style="font-size:12px;color:#4f46e5;font-weight:800;margin-bottom:6px;">AMAZON S3 DELIVERY URL</div>
+                            <div style="font-size:13px;color:#334155;overflow-wrap:anywhere;">https://your-bucket.s3.amazonaws.com/website/website-image.jpg</div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 col-lg-6">
-                <span style="display:inline-block;padding:7px 12px;background-color:#ede9fe;color:#7c3aed;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">BUILT-IN FILE MANAGEMENT</span>
-                <h2 style="font-size:36px;line-height:1.2;font-weight:800;letter-spacing:-.8px;margin:0 0 18px;">Browse Amazon S3 Files Without Leaving Odoo</h2>
+                <span style="display:inline-block;padding:7px 12px;background-color:#ede9fe;color:#7c3aed;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">WEBSITE MEDIA OFFLOAD</span>
+                <h2 class="ofs-h2" style="font-weight:800;letter-spacing:-.8px;margin:0 0 18px;">Build Your Odoo Website with Images Delivered from Amazon S3</h2>
                 <p style="font-size:17px;color:#64748b;margin:0 0 22px;">
-                    The integrated file explorer gives administrators direct access to configured bucket folders and files from the Odoo backend.
+                    Upload and manage website images through Odoo as usual. With AWS S3 storage enabled, supported website media can be stored in your S3 bucket and its media URL can be automatically rewritten to the S3 location for delivery.
                 </p>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-                    <div style="padding:15px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Browse folders</div>
-                    <div style="padding:15px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Search files</div>
-                    <div style="padding:15px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Download objects</div>
-                    <div style="padding:15px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>View metadata</div>
+
+                <div class="ofs-check-grid">
+                    <div style="padding:15px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Store website images in S3</div>
+                    <div style="padding:15px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Rewrite media URLs</div>
+                    <div style="padding:15px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Deliver from S3</div>
+                    <div style="padding:15px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#10b981;"></i>Keep the Odoo workflow</div>
                 </div>
             </div>
         </div>
@@ -269,38 +291,38 @@
     <!-- WORKFLOW -->
     <section style="padding:46px 32px;background-color:#0f172a;border-radius:28px;margin-bottom:58px;color:#ffffff;">
         <div class="text-center" style="max-width:720px;margin:0 auto 36px;">
-            <span style="display:inline-block;padding:7px 12px;background-color:#1e293b;color:#c7d2fe;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">ATTACHMENT WORKFLOW</span>
-            <h2 style="font-size:36px;line-height:1.2;font-weight:800;margin:0 0 14px;color:#ffffff;">How Odoo AWS S3 Attachment Storage Works</h2>
-            <p style="font-size:17px;color:#94a3b8;margin:0;">A simple four-step process that keeps the user experience inside Odoo.</p>
+            <span style="display:inline-block;padding:7px 12px;background-color:#1e293b;color:#c7d2fe;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">ODOO → AWS S3 WORKFLOW</span>
+            <h2 style="font-size:36px;line-height:1.2;font-weight:800;margin:0 0 14px;color:#ffffff;">How Odoo Files and Website Images Reach Amazon S3</h2>
+            <p style="font-size:17px;color:#94a3b8;margin:0;">A straightforward storage and delivery workflow designed around the normal Odoo experience.</p>
         </div>
 
         <div class="row g-4">
             <div class="col-12 col-md-6 col-lg-3">
                 <div style="height:100%;padding:24px;background-color:#1e293b;border:1px solid #334155;border-radius:18px;">
                     <div style="width:42px;height:42px;border-radius:12px;background-color:#4f46e5;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">1</div>
-                    <h3 style="font-size:20px;color:#ffffff;font-weight:800;">Upload</h3>
-                    <p style="color:#cbd5e1;margin:0;">A user uploads an attachment or a product image/web asset through any Odoo record interface.</p>
+                    <h3 style="font-size:20px;color:#ffffff;font-weight:800;">Create or Upload</h3>
+                    <p style="color:#cbd5e1;margin:0;">Add an attachment, product image, document, or supported website image through Odoo.</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
                 <div style="height:100%;padding:24px;background-color:#1e293b;border:1px solid #334155;border-radius:18px;">
                     <div style="width:42px;height:42px;border-radius:12px;background-color:#7c3aed;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">2</div>
-                    <h3 style="font-size:20px;color:#ffffff;font-weight:800;">Rule Check</h3>
-                    <p style="color:#cbd5e1;margin:0;">The module evaluates the active storage rule configured for that specific Odoo model.</p>
+                    <h3 style="font-size:20px;color:#ffffff;font-weight:800;">Store in S3</h3>
+                    <p style="color:#cbd5e1;margin:0;">The configured AWS S3 workflow stores the supported file in your selected Amazon S3 bucket.</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
                 <div style="height:100%;padding:24px;background-color:#1e293b;border:1px solid #334155;border-radius:18px;">
                     <div style="width:42px;height:42px;border-radius:12px;background-color:#0ea5e9;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">3</div>
-                    <h3 style="font-size:20px;color:#ffffff;font-weight:800;">S3 Storage</h3>
-                    <p style="color:#cbd5e1;margin:0;">The file is stored using AWS S3 Only, Dual Storage, or Odoo Only mode.</p>
+                    <h3 style="font-size:20px;color:#ffffff;font-weight:800;">Rewrite URL</h3>
+                    <p style="color:#cbd5e1;margin:0;">Supported website media references are automatically rewritten to point to the S3-hosted file.</p>
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3">
                 <div style="height:100%;padding:24px;background-color:#1e293b;border:1px solid #334155;border-radius:18px;">
                     <div style="width:42px;height:42px;border-radius:12px;background-color:#10b981;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:18px;">4</div>
-                    <h3 style="font-size:20px;color:#ffffff;font-weight:800;">Retrieve</h3>
-                    <p style="color:#cbd5e1;margin:0;">Odoo retrieves and serves the attachment from its configured storage location.</p>
+                    <h3 style="font-size:20px;color:#ffffff;font-weight:800;">Deliver from S3</h3>
+                    <p style="color:#cbd5e1;margin:0;">Website visitors request the rewritten media URL and receive the image from Amazon S3.</p>
                 </div>
             </div>
         </div>
@@ -310,13 +332,13 @@
     <section style="margin-bottom:58px;">
         <div class="text-center" style="max-width:720px;margin:0 auto 34px;">
             <span style="display:inline-block;padding:7px 12px;background-color:#ecfdf5;color:#059669;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:14px;">QUICK SETUP</span>
-            <h2 style="font-size:36px;line-height:1.2;font-weight:800;letter-spacing:-.8px;margin:0 0 14px;">Configure Odoo AWS S3 in Two Steps</h2>
+            <h2 class="ofs-h2" style="font-weight:800;letter-spacing:-.8px;margin:0 0 14px;">Configure Odoo AWS S3 in Three Simple Steps</h2>
         </div>
 
         <div class="row g-4">
             <div class="col-12 col-lg-6">
                 <div style="height:100%;padding:32px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
-                    <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px;">
+                    <div class="ofs-flex-center" style="margin-bottom:22px;">
                         <div style="width:46px;height:46px;border-radius:13px;background-color:#eef2ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-weight:800;">01</div>
                         <h3 style="font-size:24px;font-weight:800;margin:0;">Connect Your S3 Bucket</h3>
                     </div>
@@ -331,9 +353,9 @@
 
             <div class="col-12 col-lg-6">
                 <div style="height:100%;padding:32px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:22px;">
-                    <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px;">
+                    <div class="ofs-flex-center" style="margin-bottom:22px;">
                         <div style="width:46px;height:46px;border-radius:13px;background-color:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;font-weight:800;">02</div>
-                        <h3 style="font-size:24px;font-weight:800;margin:0;">Create a Sync Rule</h3>
+                        <h3 style="font-size:24px;font-weight:800;margin:0;">Configure Storage & URL Delivery</h3>
                     </div>
                     <ol style="padding-left:20px;color:#475569;margin:0;">
                         <li style="margin-bottom:10px;">Open <strong>AWS S3 → Configuration → Sync Rules</strong>.</li>
@@ -367,7 +389,7 @@
                             <div style="padding:16px;background-color:#ffffff;border:1px solid #dbeafe;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#2563eb;"></i>AWS credentials with bucket permissions</div>
                         </div>
                         <div class="col-12 col-md-6">
-                            <div style="padding:16px;background-color:#ffffff;border:1px solid #dbeafe;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#2563eb;"></i>Odoo Sales application</div>
+                            <div style="padding:16px;background-color:#ffffff;border:1px solid #dbeafe;border-radius:14px;"><i class="fa fa-check-circle me-2" style="color:#2563eb;"></i>Odoo Website for website media delivery</div>
                         </div>
                     </div>
                 </div>
@@ -382,7 +404,7 @@
             <h2 style="font-size:36px;line-height:1.2;font-weight:800;letter-spacing:-.8px;margin:0;">Frequently Asked Questions</h2>
         </div>
 
-        <div style="display:grid;gap:14px;">
+        <div style="display:grid;grid-template-columns:1fr;row-gap:14px;">
             <div style="padding:24px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
                 <h3 style="font-size:19px;font-weight:800;margin:0 0 8px;">Which Odoo records are supported?</h3>
                 <p style="margin:0;color:#64748b;">It supports all records and attachments across Odoo, including product templates, sale orders, invoices, web assets, and custom models.</p>
@@ -399,20 +421,28 @@
                 <h3 style="font-size:19px;font-weight:800;margin:0 0 8px;">Does the module include synchronization reporting?</h3>
                 <p style="margin:0;color:#64748b;">Yes. The dashboard shows connection health, successful uploads, failures, recent activity, and related Odoo records.</p>
             </div>
+            <div style="padding:24px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
+                <h3 style="font-size:19px;font-weight:800;margin:0 0 8px;">Can Odoo website images be delivered from Amazon S3?</h3>
+                <p style="margin:0;color:#64748b;">Yes. Supported website images can be stored in your configured S3 bucket, with their media URLs automatically rewritten to the S3 location for delivery.</p>
+            </div>
+            <div style="padding:24px;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:18px;">
+                <h3 style="font-size:19px;font-weight:800;margin:0 0 8px;">Does URL rewriting change how I create pages in Odoo?</h3>
+                <p style="margin:0;color:#64748b;">No. You continue creating and editing website content through Odoo. The module handles the supported media storage and URL delivery workflow.</p>
+            </div>
         </div>
     </section>
 
     <!-- CTA -->
     <section style="overflow:hidden;padding:54px 34px;background-color:#4f46e5;border-radius:28px;text-align:center;color:#ffffff;">
         <div style="position:relative;z-index:2;max-width:760px;margin:0 auto;">
-            <h2 style="font-size:36px;line-height:1.2;font-weight:800;margin:0 0 14px;color:#ffffff;">Ready to Connect Odoo with Amazon S3?</h2>
-            <p style="font-size:17px;color:#e0e7ff;margin:0 0 24px;">Get support, setup assistance, or customization services from OdooFusion.</p>
+            <h2 style="font-size:36px;line-height:1.2;font-weight:800;margin:0 0 14px;color:#ffffff;">Ready to Offload Odoo Files and Website Media to Amazon S3?</h2>
+            <p style="font-size:17px;color:#e0e7ff;margin:0 0 24px;">Store Odoo attachments and website images in Amazon S3, automatically rewrite supported media URLs, and deliver cloud-hosted files without changing your normal Odoo workflow.</p>
             <a href="https://odoofusion.net" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:13px 24px;background-color:#ffffff;color:#4f46e5;text-decoration:none;border-radius:12px;font-weight:800;">Visit OdooFusion</a>
         </div>
     </section>
 
     <footer style="text-align:center;padding:26px 10px 6px;color:#64748b;">
-        <p style="margin:0 0 4px;font-weight:800;color:#334155;">Odoo AWS S3 Integration for Odoo 18</p>
+        <p style="margin:0 0 4px;font-weight:800;color:#334155;">Odoo AWS S3 Integration — File, Media & Website Image Storage for Odoo 18</p>
         <p style="margin:0;font-size:13px;">Developed by OdooFusion</p>
     </footer>
 
