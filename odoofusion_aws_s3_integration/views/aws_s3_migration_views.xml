@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_aws_s3_migration_form" model="ir.ui.view">
+        <field name="name">aws.s3.migration.form</field>
+        <field name="model">aws.s3.migration</field>
+        <field name="arch" type="xml">
+            <form string="Migrate Existing Files to AWS S3">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        <i class="fa fa-info-circle" title="Info"/>
+                        <strong> Background Migration Mode:</strong>
+                        Files are migrated in batches of 200 per run.
+                    </div>
+
+                    <group>
+                        <field name="config_id" readonly="1"/>
+                    </group>
+
+                    <group string="Current Storage Stats">
+                        <group>
+                            <field name="total_all" string="Total Attachments"/>
+                            <field name="total_already_s3" string="Already in S3"/>
+                        </group>
+                        <group>
+                            <field name="total_local" string="In Local Filestore"/>
+                            <field name="total_db" string="In Database (Binary Blobs)"/>
+                        </group>
+                    </group>
+
+                    <group string="Migration Log (Last Batch)"
+                           invisible="migration_log == False">
+                        <field name="migration_log" nolabel="1" widget="text"
+                               style="font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 12px; border-radius: 6px;"/>
+                    </group>
+
+                    <footer>
+                        <button name="action_start_background_migration"
+                                string="Start Background Migration"
+                                type="object"
+                                class="btn-primary"
+                                icon="fa-play"/>
+                        <button name="action_run_batch_now"
+                                string="Run One Batch Now (200 files)"
+                                type="object"
+                                class="btn-secondary"
+                                icon="fa-step-forward"/>
+                        <button string="Close"
+                                class="btn-default"
+                                special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_ir_attachment_form_s3_status" model="ir.ui.view">
+        <field name="name">ir.attachment.form.s3.status</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="base.view_attachment_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="is_s3_stored" invisible="1"/>
+
+                <div invisible="not is_s3_stored"
+                     style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:14px 18px;margin-bottom:14px;">
+                    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                        <span style="background:#16a34a;color:#fff;border-radius:6px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:.03em;">
+                            ✅ STORED IN AWS S3
+                        </span>
+                        <span style="color:#166534;font-size:13px;font-weight:500;">
+                            This file is stored exclusively in AWS S3 —
+                            <strong>zero bytes</strong> consumed on the Odoo server.
+                        </span>
+                    </div>
+                    <div style="margin-top:10px;background:#dcfce7;border-radius:6px;padding:8px 12px;">
+                        <span style="font-size:11px;font-weight:700;color:#14532d;text-transform:uppercase;letter-spacing:.05em;">S3 Object Key: </span>
+                        <span style="font-family:monospace;font-size:12px;color:#166534;word-break:break-all;">
+                            <field name="store_fname" readonly="1" nolabel="1"/>
+                        </span>
+                    </div>
+                </div>
+
+                <div invisible="is_s3_stored"
+                     style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:10px;padding:14px 18px;margin-bottom:14px;">
+                    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                        <span style="background:#d97706;color:#fff;border-radius:6px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:.03em;">
+                            ⚠️ STORED LOCALLY
+                        </span>
+                        <span style="color:#92400e;font-size:13px;font-weight:500;">
+                            This file is stored on the <strong>Odoo server disk or database</strong>.
+                        </span>
+                    </div>
+                    <div style="margin-top:10px;background:#fef3c7;border-radius:6px;padding:8px 12px;">
+                        <span style="font-size:11px;font-weight:700;color:#78350f;text-transform:uppercase;letter-spacing:.05em;">Store Path: </span>
+                        <span style="font-family:monospace;font-size:12px;color:#92400e;word-break:break-all;">
+                            <field name="store_fname" readonly="1" nolabel="1"/>
+                        </span>
+                    </div>
+                </div>
+
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_ir_attachment_list_s3_status" model="ir.ui.view">
+        <field name="name">ir.attachment.list.s3.status</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="base.view_attachment_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='file_size']" position="after">
+                <field name="is_s3_stored" string="In S3"
+                       widget="boolean"
+                       optional="show"/>
+                <field name="store_fname" string="S3 / Local Path"
+                       optional="show"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

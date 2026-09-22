@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data noupdate="1">
-        <!-- AWS S3 Bucket Configuration -->
-        <record id="aws_s3_bucket_sma_members" model="aws.s3.bucket">
-            <field name="name">sma-members</field>
-            <field name="region_name">us-east-1</field>
-            <field name="aws_access_key_id">YOUR_AWS_ACCESS_KEY_ID</field>
-            <field name="aws_secret_access_key">YOUR_AWS_SECRET_ACCESS_KEY</field>
-            <field name="is_active">True</field>
-            <field name="state">draft</field>
-        </record>
+<odoo noupdate="1">
+    <record id="aws_s3_bucket_default" model="aws.s3.bucket">
+        <field name="name">odoo-company-files</field>
+        <field name="region_name">ap-southeast-1</field>
+        <field name="aws_access_key_id">AKIAIOSFODNN7EXAMPLE</field>
+        <field name="aws_secret_access_key">wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY</field>
+        <field name="is_active">False</field>
+    </record>
 
-        <!-- AWS S3 Attachment Sync Rule for Contacts -->
-        <record id="aws_s3_attachment_rule_partner" model="aws.s3.attachment.rule">
-            <field name="model_id" ref="base.model_res_partner"/>
-            <field name="storage_mode">s3_only</field>
-            <field name="root_folder">Partners/</field>
-            <field name="bucket_id" ref="aws_s3_bucket_sma_members"/>
-            <field name="is_active">True</field>
-        </record>
-    </data>
+    <record id="aws_s3_attachment_rule_partner" model="aws.s3.attachment.rule">
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="storage_mode">s3_only</field>
+        <field name="root_folder">Partners/</field>
+        <field name="bucket_id" ref="aws_s3_bucket_default"/>
+        <field name="is_active">True</field>
+    </record>
 </odoo>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_aws_s3_config_form" model="ir.ui.view">
+        <field name="name">aws.s3.config.form</field>
+        <field name="model">aws.s3.config</field>
+        <field name="arch" type="xml">
+            <form string="AWS S3 Global Storage Configuration">
+
+                <header>
+                    <button name="action_test_connection"
+                            string="Test Connection"
+                            type="object"
+                            class="btn-primary"
+                            icon="fa-plug"/>
+                    <button name="action_activate"
+                            string="Activate S3 Storage"
+                            type="object"
+                            class="btn-success"
+                            invisible="is_active == True"
+                            icon="fa-cloud-upload"/>
+                    <button name="action_deactivate"
+                            string="Deactivate S3 Storage"
+                            type="object"
+                            class="btn-warning"
+                            invisible="is_active == False"
+                            icon="fa-power-off"/>
+                    <button name="action_open_migration_wizard"
+                            string="Migrate Existing Files to S3"
+                            type="object"
+                            class="btn-secondary"
+                            icon="fa-exchange"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,connected,failed"/>
+                </header>
+
+                <sheet>
+                    <div class="alert alert-success" role="alert"
+                         invisible="is_active == False">
+                        <strong>
+                            <i class="fa fa-check-circle" title="Active"/> S3 Storage is ACTIVE
+                        </strong>
+                        — New file attachments are being routed to AWS S3
+                        (<field name="routing_mode" readonly="1" nolabel="1"/> mode).
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="is_active == True">
+                        <strong>
+                            <i class="fa fa-exclamation-triangle" title="Inactive"/> S3 Storage is INACTIVE
+                        </strong>
+                        — Files are stored in the local Odoo filestore.
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="o_stat_info text-center p-3 bg-light rounded">
+                                <span class="o_stat_value" style="font-size:2em; color:#875A7B;">
+                                    <field name="total_files_synced"/>
+                                </span>
+                                <span class="o_stat_text d-block">Files in S3</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="o_stat_info text-center p-3 bg-light rounded">
+                                <span class="o_stat_value" style="font-size:2em; color:#e67e22;">
+                                    <field name="pending_deletes"/>
+                                </span>
+                                <span class="o_stat_text d-block">Pending S3 Deletions</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <group>
+                        <group string="Identification">
+                            <field name="name"/>
+                            <field name="is_active" widget="toggle_button"/>
+                            <field name="routing_mode" widget="radio"
+                                   options="{'horizontal': true}"/>
+                        </group>
+                        <group string="Connection Status">
+                            <field name="state" widget="statusbar"
+                                   statusbar_visible="draft,connected,failed"/>
+                        </group>
+                    </group>
+
+                    <div class="alert alert-info" role="alert"
+                         invisible="routing_mode != 'global'">
+                        <i class="fa fa-globe" title="Global"/>
+                        <strong> Global Mode:</strong>
+                        Every new attachment — regardless of its source model — is
+                        uploaded to S3.
+                    </div>
+                    <div class="alert alert-info" role="alert"
+                         invisible="routing_mode != 'rule_based'">
+                        <i class="fa fa-filter" title="Rule-Based"/>
+                        <strong> Rule-Based Mode:</strong>
+                        Only models that have an active <strong>Sync Rule</strong> are uploaded to S3.
+                        <a class="btn btn-sm btn-link p-0 ml-2"
+                           name="%(odoofusion_aws_s3_integration.action_aws_s3_attachment_rule)d"
+                           type="action">
+                            <i class="fa fa-external-link"/> Manage Sync Rules
+                        </a>
+                    </div>
+
+                    <notebook>
+                        <page string="AWS Credentials" name="credentials">
+                            <group>
+                                <group string="Bucket">
+                                    <field name="bucket_name" placeholder="my-odoo-files"/>
+                                    <field name="region_name" placeholder="ap-southeast-1"/>
+                                </group>
+                                <group string="Authentication">
+                                    <field name="aws_access_key" password="True"/>
+                                    <field name="aws_secret_key" password="True"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="CDN &amp; Public Access" name="cdn">
+                            <group>
+                                <group string="Access Mode">
+                                    <field name="public_bucket"/>
+                                    <field name="cdn_url"
+                                           invisible="public_bucket == False"
+                                           placeholder="https://cdn.yourcompany.com"/>
+                                    <field name="presigned_ttl"
+                                           invisible="public_bucket == True"
+                                           widget="integer"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert"
+                                 invisible="public_bucket == False">
+                                <i class="fa fa-info-circle" title="Info"/>
+                                <strong>Public Mode:</strong> Images served via permanent S3/CDN URLs.
+                            </div>
+                            <div class="alert alert-info" role="alert"
+                                 invisible="public_bucket == True">
+                                <i class="fa fa-info-circle" title="Info"/>
+                                <strong>Private Mode:</strong> Files served via expiring pre-signed URLs.
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_aws_s3_config_tree" model="ir.ui.view">
+        <field name="name">aws.s3.config.tree</field>
+        <field name="model">aws.s3.config</field>
+        <field name="arch" type="xml">
+            <tree string="S3 Configurations"
+                  decoration-success="is_active == True"
+                  decoration-muted="is_active == False">
+                <field name="name"/>
+                <field name="bucket_name"/>
+                <field name="region_name"/>
+                <field name="public_bucket"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'connected'"
+                       decoration-warning="state == 'draft'"
+                       decoration-danger="state == 'failed'"/>
+                <field name="is_active" widget="toggle_button"/>
+                <field name="total_files_synced"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_aws_s3_config" model="ir.actions.act_window">
+        <field name="name">S3 Global Storage</field>
+        <field name="res_model">aws.s3.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure Global AWS S3 Storage
+            </p>
+            <p>
+                Add your AWS S3 configuration here. Once activated, files will be stored in S3 automatically.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Scheduled Action: S3 Delete Queue Processor (every 5 min) -->
+    <record id="ir_cron_s3_delete_queue" model="ir.cron">
+        <field name="name">AWS S3: Process Deletion Queue</field>
+        <field name="model_id" ref="model_aws_s3_delete_queue"/>
+        <field name="state">code</field>
+        <field name="code">model.action_process_delete_queue()</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="active">True</field>
+        <field name="priority">10</field>
+    </record>
+
+    <!-- Scheduled Action: S3 Delete Queue Cleanup (daily) -->
+    <record id="ir_cron_s3_delete_queue_clean" model="ir.cron">
+        <field name="name">AWS S3: Clean Completed Deletion Queue Records</field>
+        <field name="model_id" ref="model_aws_s3_delete_queue"/>
+        <field name="state">code</field>
+        <field name="code">model.action_clean_done()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+        <field name="priority">20</field>
+    </record>
+
+    <!-- Scheduled Action: Background Migration (disabled by default) -->
+    <record id="ir_cron_s3_migration" model="ir.cron">
+        <field name="name">AWS S3: Background File Migration to S3</field>
+        <field name="model_id" ref="model_aws_s3_migration"/>
+        <field name="state">code</field>
+        <field name="code">model.action_cron_migrate_batch()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="active">False</field>
+        <field name="priority">30</field>
+    </record>
+
+</odoo>

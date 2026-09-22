@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-import boto3
+# Author: Metamorphosis, Joyanto
+
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+
 
 class AwsS3FileExplorer(models.TransientModel):
     _name = 'aws.s3.file.explorer'
@@ -30,11 +32,9 @@ class AwsS3FileExplorer(models.TransientModel):
 
     @api.model
     def action_open_explorer(self):
-        # Find first active bucket
         bucket = self.env['aws.s3.bucket'].search([('is_active', '=', True)], limit=1)
         if not bucket:
             raise UserError(_("Please configure and activate at least one AWS S3 Bucket first."))
-        # Create explorer record
         explorer = self.create({
             'bucket_id': bucket.id,
             'folder_path': '',
@@ -52,7 +52,6 @@ class AwsS3FileExplorer(models.TransientModel):
         if not self.bucket_id:
             return
         
-        # Clear existing items
         self.item_ids = [(5, 0, 0)]
         
         try:
@@ -67,7 +66,6 @@ class AwsS3FileExplorer(models.TransientModel):
             
             new_items = []
             
-            # Add parent folder (..) if we are not at root
             if prefix:
                 parts = prefix.rstrip('/').split('/')
                 if len(parts) > 1:
@@ -82,7 +80,6 @@ class AwsS3FileExplorer(models.TransientModel):
                     'last_modified': False,
                 }))
             
-            # Process Folders (CommonPrefixes)
             for folder in response.get('CommonPrefixes', []):
                 full_prefix = folder.get('Prefix')
                 folder_name = full_prefix.rstrip('/').split('/')[-1] + '/'
@@ -94,18 +91,15 @@ class AwsS3FileExplorer(models.TransientModel):
                     'last_modified': False,
                 }))
             
-            # Process Files (Contents)
             for content in response.get('Contents', []):
                 key = content.get('Key')
                 if key == prefix:
-                    # Skip the directory folder placeholder itself
                     continue
                 file_name = key.split('/')[-1]
                 if not file_name:
                     continue
                 size_bytes = content.get('Size', 0)
                 
-                # Format file size
                 if size_bytes < 1024:
                     size_str = f"{size_bytes} B"
                 elif size_bytes < 1024 * 1024:
@@ -178,7 +172,6 @@ class AwsS3FileExplorerItem(models.TransientModel):
             response = client.get_object(Bucket=explorer.bucket_id.name, Key=self.key)
             file_data = response['Body'].read()
             
-            # Create a temporary attachment in Odoo to stream back to the browser
             attachment = self.env['ir.attachment'].create({
                 'name': self.name,
                 'type': 'binary',
@@ -201,7 +194,6 @@ class AwsS3FileExplorerItem(models.TransientModel):
             client = explorer.bucket_id._get_s3_client(explorer.bucket_id)
             client.delete_object(Bucket=explorer.bucket_id.name, Key=self.key)
             
-            # Log deletion
             self.env['aws.s3.log'].sudo().create({
                 'name': 'File Explorer Delete',
                 'attachment_name': self.name,
